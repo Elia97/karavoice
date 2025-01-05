@@ -1,13 +1,14 @@
 "use client";
 
 import { ReactNode, useState } from "react";
-import { MenuContext } from "./contexts";
+import { MenuContext, EventContext } from "./contexts";
+import { Event } from "../types";
 
-interface MenuProviderProps {
+interface ProviderProps {
   children: ReactNode;
 }
 
-export const MenuProvider = ({ children }: MenuProviderProps) => {
+export const MenuProvider = ({ children }: ProviderProps) => {
   const [toggledMenu, setToggledMenu] = useState<boolean>(false);
 
   const toggleMenu = () => {
@@ -18,5 +19,17 @@ export const MenuProvider = ({ children }: MenuProviderProps) => {
 
   return (
     <MenuContext.Provider value={contextValue}>{children}</MenuContext.Provider>
+  );
+};
+
+export const EventProvider = ({ children }: ProviderProps) => {
+  const [events, setEvents] = useState<Event[]>([]);
+
+  const contextValue = { events, setEvents };
+
+  return (
+    <EventContext.Provider value={contextValue}>
+      {children}
+    </EventContext.Provider>
   );
 };

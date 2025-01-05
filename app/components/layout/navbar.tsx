@@ -18,8 +18,8 @@ interface EventCategory {
 
 const navLinks: NavLink[] = [
   { href: "/", label: "Home", collapse: false },
-  { href: "/chi-siamo", label: "Chi siamo", collapse: false },
-  { href: "/eventi", label: "Eventi", collapse: true },
+  { href: "/about-us", label: "Chi siamo", collapse: false },
+  { href: "/events", label: "Eventi", collapse: true },
 ];
 
 const eventCategories: EventCategory[] = [
@@ -66,7 +66,7 @@ const Navbar: FC = () => {
                   eventCategories.map((category) => {
                     return (
                       <li key={category.slug} className="py-3">
-                        <Link href={`/eventi/${category.slug}`} className="p-3">
+                        <Link href={`/events/${category.slug}`} className="p-3">
                           {category.label}
                         </Link>
                       </li>
