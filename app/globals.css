@@ -5,6 +5,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --neon-pink: #ff00ff;
+  --neon-blue: #00ffff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,4 +20,38 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .bg-neon-pink {
+    background-color: var(--neon-pink);
+  }
+  .bg-neon-blue {
+    background-color: var(--neon-blue);
+  }
+  .from-neon-pink {
+    --tw-gradient-from: var(--neon-pink);
+  }
+  .to-neon-blue {
+    --tw-gradient-to: var(--neon-blue);
+  }
+}
+
+/* Stile per la scrollbar */
+::-webkit-scrollbar {
+  width: 8px; /* Larghezza della scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #d4d4d8; /* Colore del track */
+  border-radius: 10px; /* Raggio del bordo del track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a1a1aa; /* Colore del thumb */
+  border-radius: 10px; /* Raggio del bordo del thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #71717a; /* Colore del thumb quando è hoverato */
 }
