@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState, MouseEvent } from "react";
+import { FC, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown } from "lucide-react";
@@ -30,48 +30,44 @@ const eventCategories: EventCategory[] = [
 
 const Navbar: FC = () => {
   const pathname = usePathname();
-  const [isEventsOpen, setIsEventOpen] = useState<boolean>(false);
-
-  const toggleEvents = (e: MouseEvent<SVGSVGElement | HTMLUListElement>) => {
-    e.preventDefault();
-    setIsEventOpen((prev) => !prev);
-  };
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
 
   return (
     <nav className="hidden lg:block">
       <ul className="flex items-center gap-4">
         {navLinks.map((link) => {
           return link.collapse ? (
-            <li key={link.href} className="relative flex items-center">
-              <Link
-                href={link.href}
+            <li
+              key={link.href}
+              onMouseEnter={() => setIsDropdownOpen(true)}
+              onMouseLeave={() => setIsDropdownOpen(false)}
+              className={`group relative flex items-center ${eventCategories.some((category) => pathname.startsWith(`/${category.slug}`)) && "border-b"}`}
+            >
+              <button
+                type="button"
                 className={`p-3 ${
                   pathname.startsWith(link.href) && "border-b"
                 }`}
               >
                 {link.label}
-              </Link>
-              <ChevronDown
-                onClick={toggleEvents}
-                aria-expanded={isEventsOpen}
-                className={`transition-transform duration-300 ${
-                  isEventsOpen && "rotate-180"
-                }`}
-              />
+              </button>
+              <ChevronDown className="cursor-pointer" />
               <ul
-                onClick={toggleEvents}
-                className="absolute top-full flex flex-col text-nowrap rounded-lg bg-neutral-950 shadow-lg"
+                className={`absolute top-full flex-col text-nowrap rounded-lg bg-neutral-950 shadow-lg ${isDropdownOpen ? "flex" : "hidden"}`}
               >
-                {isEventsOpen &&
-                  eventCategories.map((category) => {
-                    return (
-                      <li key={category.slug} className="py-3">
-                        <Link href={`/events/${category.slug}`} className="p-3">
-                          {category.label}
-                        </Link>
-                      </li>
-                    );
-                  })}
+                {eventCategories.map((category) => {
+                  return (
+                    <li key={category.slug} className="py-3">
+                      <Link
+                        href={`/${category.slug}`}
+                        className="p-3"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        {category.label}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </li>
           ) : (

@@ -23,7 +23,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
         alt={event.name}
         className="w-full rounded-t-xl object-cover"
         width={400}
-        height={300}
+        height={200}
       />
 
       {/* Contenuto */}
@@ -45,7 +45,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
           <Link href={`${pathname}/${event.id}`}>
             <button
               type="button"
-              className="rounded-full bg-fuchsia-500 px-3 py-2 text-sm font-medium text-white shadow-md transition hover:bg-fuchsia-600"
+              className="rounded-full bg-neon-pink px-4 py-2 text-sm text-white"
               onClick={() => window.scrollTo(0, 0)}
             >
               Prenota ora

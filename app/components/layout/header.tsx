@@ -6,6 +6,7 @@ import { useContext, FC } from "react";
 import { MenuContext } from "@/app/context-api/contexts";
 import { useState, useEffect } from "react";
 import Navbar from "./navbar";
+import Link from "next/link";
 
 const Header: FC = () => {
   const { toggleMenu } = useContext(MenuContext);
@@ -41,15 +42,17 @@ const Header: FC = () => {
       <div className="flex items-center gap-8">
         <Navbar />
         {!false ? (
-          <button
-            type="button"
-            className="group flex items-center gap-2 rounded-full p-1.5 lg:text-lg"
-          >
-            <span className="invisible hover:underline sm:visible lg:invisible lg:group-hover:visible">
-              Accedi
-            </span>
-            <LogIn className="lg:size-7" />
-          </button>
+          <Link href={"/auth"}>
+            <button
+              type="button"
+              className="group flex items-center gap-2 rounded-full p-1.5 lg:text-lg"
+            >
+              <span className="invisible hover:underline sm:visible lg:invisible lg:group-hover:visible">
+                Accedi
+              </span>
+              <LogIn className="lg:size-7" />
+            </button>
+          </Link>
         ) : (
           <button
             type="button"

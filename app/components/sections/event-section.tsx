@@ -2,7 +2,7 @@
 
 import { FC, useContext, useEffect } from "react";
 import { Event } from "@/app/types";
-import EventCard from "./event-card";
+import EventCard from "../cards/event-card";
 import { EventContext } from "@/app/context-api/contexts";
 
 interface EventSectionProps {
@@ -15,10 +15,20 @@ const EventSection: FC<EventSectionProps> = ({ events }) => {
   useEffect(() => {
     setEvents(events);
   });
+
   return (
-    <section className="flex h-screen w-full items-center justify-center">
-      <div>
-        <h2 className="mb-8 text-center text-3xl font-bold md:text-4xl lg:text-5xl">
+    <section className="min-h-screen overflow-hidden">
+      {/* Video Background */}
+      {/* <video
+        autoPlay
+        loop
+        muted
+        className="absolute h-full w-full object-cover"
+      >
+        <source src="/background.mp4" type="video/mp4" />
+      </video> */}
+      <div className="relative mx-auto mt-16 max-w-screen-md px-4 py-12">
+        <h2 className="mb-8 text-center text-4xl font-semibold">
           Prossimi Eventi
         </h2>
         <div className="grid justify-items-center gap-8 md:grid-cols-2 xl:grid-cols-3">
