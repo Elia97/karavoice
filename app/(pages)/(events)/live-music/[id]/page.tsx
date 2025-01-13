@@ -1,6 +1,6 @@
 import BookingSection from "@/app/components/sections/booking-section";
 
-export default async function BookingKaraoke({
+export default async function BookingLiveMusic({
   params,
 }: {
   params: { id: string };

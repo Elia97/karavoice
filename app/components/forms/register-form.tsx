@@ -1,8 +1,7 @@
 import { FC, FormEvent, useState } from "react";
 
 interface FormData {
-  username: string;
-  phone: string;
+  name: string;
   email: string;
   password: string;
   confirmPassword: string; // Aggiunto per gestire la conferma password
@@ -10,8 +9,7 @@ interface FormData {
 
 const RegisterForm: FC = () => {
   const [formData, setFormData] = useState<FormData>({
-    username: "",
-    phone: "",
+    name: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -31,8 +29,8 @@ const RegisterForm: FC = () => {
     setError(null); // Resetta l'errore
 
     // Preparazione dei dati da inviare al backend
-    const { username, phone, email, password } = formData; // Escludi confirmPassword
-    const payload = { username, phone, email, password };
+    const { name, email, password } = formData; // Escludi confirmPassword
+    const payload = { name, email, password };
 
     try {
       const response = await fetch("api/auth/register", {
@@ -55,50 +53,23 @@ const RegisterForm: FC = () => {
       <h4 className="mb-6 text-xl font-medium md:text-2xl lg:text-3xl xl:text-4xl">
         Crea un account
       </h4>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="space-y-2">
-          <label
-            htmlFor="username"
-            className="block text-sm md:text-base lg:text-lg xl:text-xl"
-          >
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        <div>
+          <label htmlFor="name" className="block text-sm md:text-base">
             Nome
           </label>
           <input
-            id="username"
+            id="name"
             type="text"
             required
-            value={formData.username}
-            onChange={(e) =>
-              setFormData({ ...formData, username: e.target.value })
-            }
-            className="w-full rounded-md border px-3 py-2 shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            className="w-full border-b border-neutral-500 bg-transparent pt-1.5 text-white placeholder-neutral-500 outline-none transition-colors focus:border-neon-pink focus:ring-0"
             placeholder="John Doe"
           />
         </div>
-        <div className="space-y-2">
-          <label
-            htmlFor="phone"
-            className="block text-sm md:text-base lg:text-lg xl:text-xl"
-          >
-            Telefono
-          </label>
-          <input
-            id="phone"
-            type="tel"
-            required
-            value={formData.phone}
-            onChange={(e) =>
-              setFormData({ ...formData, phone: e.target.value })
-            }
-            className="w-full rounded-md border px-3 py-2 shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
-            placeholder="### #######"
-          />
-        </div>
-        <div className="space-y-2">
-          <label
-            htmlFor="email"
-            className="block text-sm md:text-base lg:text-lg xl:text-xl"
-          >
+        <div>
+          <label htmlFor="email" className="block text-sm md:text-base">
             Email
           </label>
           <input
@@ -109,15 +80,12 @@ const RegisterForm: FC = () => {
             onChange={(e) =>
               setFormData({ ...formData, email: e.target.value })
             }
-            className="w-full rounded-md border px-3 py-2 shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+            className="w-full border-b border-neutral-500 bg-transparent pt-1.5 text-white placeholder-neutral-500 outline-none transition-colors focus:border-neon-pink focus:ring-0"
             placeholder="john@example.com"
           />
         </div>
-        <div className="space-y-2">
-          <label
-            htmlFor="password"
-            className="block text-sm md:text-base lg:text-lg xl:text-xl"
-          >
+        <div>
+          <label htmlFor="password" className="block text-sm md:text-base">
             Password
           </label>
           <input
@@ -128,13 +96,13 @@ const RegisterForm: FC = () => {
             onChange={(e) =>
               setFormData({ ...formData, password: e.target.value })
             }
-            className="w-full rounded-md border px-3 py-2 shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+            className="w-full border-b border-neutral-500 bg-transparent pt-1.5 text-white placeholder-neutral-500 outline-none transition-colors focus:border-neon-pink focus:ring-0"
           />
         </div>
-        <div className="space-y-2">
+        <div>
           <label
             htmlFor="confirm-password"
-            className="block text-sm md:text-base lg:text-lg xl:text-xl"
+            className="block text-sm md:text-base"
           >
             Conferma Password
           </label>
@@ -146,13 +114,13 @@ const RegisterForm: FC = () => {
             onChange={(e) =>
               setFormData({ ...formData, confirmPassword: e.target.value })
             }
-            className="w-full rounded-md border px-3 py-2 shadow-sm focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+            className="w-full border-b border-neutral-500 bg-transparent pt-1.5 text-white placeholder-neutral-500 outline-none transition-colors focus:border-neon-pink focus:ring-0"
           />
         </div>
         {error && <p className="text-red-500">{error}</p>}
         <button
           type="submit"
-          className="w-full rounded bg-blue-500 px-4 py-2 font-bold text-white transition hover:bg-blue-600 md:text-lg lg:text-xl xl:text-2xl"
+          className="mt-4 rounded-lg bg-neon-pink px-8 py-4 text-base font-medium text-white transition-all hover:scale-105 md:text-lg lg:text-xl xl:text-2xl"
         >
           Registrati
         </button>

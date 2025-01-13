@@ -9,7 +9,7 @@ const AuthSection: FC = () => {
   const [isRegistering, setIsRegistering] = useState(true);
 
   return (
-    <section className="mx-auto mt-16 h-screen max-w-screen-xl px-4 py-12">
+    <section className="mx-auto mt-16 h-screen max-w-screen-xl px-4 py-6">
       <div className="w-full overflow-hidden">
         <div className="flex flex-col md:flex-row">
           <AnimatePresence initial={false} mode="wait">
@@ -44,7 +44,7 @@ const AuthSection: FC = () => {
             <button
               type="button"
               onClick={() => setIsRegistering(!isRegistering)}
-              className="w-full rounded bg-blue-500 px-4 py-2 font-bold text-white transition hover:bg-blue-600 md:text-lg lg:text-xl xl:text-2xl"
+              className="w-full rounded-lg bg-neutral-900 px-8 py-4 text-base font-medium text-white shadow-lg transition-all hover:scale-105 md:text-lg lg:text-xl xl:text-2xl"
             >
               {isRegistering ? "Accedi" : "Registrati"}
             </button>

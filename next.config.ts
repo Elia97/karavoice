@@ -3,15 +3,14 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["localhost"], // Aggiungi localhost come dominio consentito
-  },
-  async rewrites() {
-    return [
+    remotePatterns: [
       {
-        source: "/uploads/:path*", // tutte le richieste /uploads verranno proxyate
-        destination: "http://localhost:3001/uploads/:path*", // indirizzo del tuo backend
+        protocol: "http",
+        hostname: "127.0.0.1",
+        port: "3001", // Specifica la porta del backend
+        pathname: "/uploads/**", // Percorso delle immagini
       },
-    ];
+    ],
   },
 };
 

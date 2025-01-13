@@ -1,14 +1,13 @@
 "use client";
 
 import { FC, FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+
 interface FormData {
   email: string;
   password: string;
 }
 
-const LoginForm: FC = () => {
-  const router = useRouter();
+const BookingForm: FC = () => {
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -27,7 +26,6 @@ const LoginForm: FC = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Login riuscito:", data);
-        router.push("/profile");
       }
     } catch {
       console.log("errore");
@@ -85,4 +83,4 @@ const LoginForm: FC = () => {
   );
 };
 
-export default LoginForm;
+export default BookingForm;

@@ -21,7 +21,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (response.ok) {
       // Puoi restituire il token o salvarlo come cookie
       const res = NextResponse.json(data);
-      res.cookies.set("auth_token", data.token, { httpOnly: true });
+      res.cookies.set("auth_token", data.token, {
+        httpOnly: true,
+        secure: true,
+        path: "/",
+        maxAge: 7 * 24 * 60 * 60, // 7 giorni
+      });
       return res;
     } else {
       return NextResponse.json(data, { status: response.status });

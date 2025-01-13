@@ -10,16 +10,14 @@ interface EventCardProps {
   event: Event;
 }
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
 const EventCard: FC<EventCardProps> = ({ event }) => {
   const pathname = usePathname();
 
   return (
-    <div className="mx-auto max-w-xs rounded-xl bg-neutral-800 shadow-lg transition-transform hover:scale-105 sm:mx-0">
+    <div className="mx-auto max-w-sm rounded-xl bg-neutral-800 shadow-lg transition-transform hover:scale-105 sm:mx-0">
       {/* Immagine */}
       <Image
-        src={`${BASE_URL}${event.image}`}
+        src={`${event.image}`}
         alt={event.name}
         className="w-full rounded-t-xl object-cover"
         width={400}
@@ -38,14 +36,14 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
             month: "long",
             year: "numeric",
           })}{" "}
-          - {`alle ${event.start_time.slice(0, 5)}`}
+          - {`alle ${event.start_time?.slice(0, 5)}`}
         </p>
         <p className="text-sm font-light">{event.location.name}</p>
         <div className="mt-4 flex justify-end">
           <Link href={`${pathname}/${event.id}`}>
             <button
               type="button"
-              className="rounded-full bg-neon-pink px-4 py-2 text-sm text-white"
+              className="rounded-lg bg-neon-pink px-4 py-2 text-base font-medium text-white transition-all hover:scale-105"
               onClick={() => window.scrollTo(0, 0)}
             >
               Prenota ora
