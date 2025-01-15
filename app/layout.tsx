@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import { MenuProvider } from "./context-api/providers";
 import Header from "./components/layout/header";
 import Sidebar from "./components/layout/sidebar";
 import Footer from "./components/layout/footer";
+import { Lobster } from "next/font/google";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const lobster = Lobster({
+  weight: "400",
+  variable: "--font-lobster",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
@@ -28,9 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${lobster.variable} ${geistSans.variable} antialiased`}>
         <MenuProvider>
           <Header />
           <Sidebar />

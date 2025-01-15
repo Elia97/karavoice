@@ -11,14 +11,6 @@ export default async function BookingDjSet({
     cache: "no-store", // Evita la cache per ottenere dati aggiornati
   });
 
-  if (!res.ok) {
-    return (
-      <div className="flex min-h-screen w-full items-center justify-center">
-        <p className="text-xl font-semibold">Evento non trovato</p>
-      </div>
-    );
-  }
-
   const event = await res.json();
 
   if (!event) {

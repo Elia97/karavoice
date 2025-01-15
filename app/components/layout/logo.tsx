@@ -8,7 +8,7 @@ const Logo: FC = () => {
       <Link href={"/"}>
         <Image src={"/karavoice-logo.svg"} alt="logo" width={48} height={48} />
       </Link>
-      <span className="self-center font-serif text-lg font-black tracking-tight md:text-xl lg:text-2xl">
+      <span className="self-center text-lg font-black tracking-tight md:text-xl lg:text-2xl">
         KaraVoice
       </span>
     </div>

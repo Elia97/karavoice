@@ -14,7 +14,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   const pathname = usePathname();
 
   return (
-    <div className="mx-auto max-w-sm rounded-xl bg-neutral-800 shadow-lg transition-transform hover:scale-105 sm:mx-0">
+    <div className="mx-auto max-w-sm rounded-xl bg-neutral-900 shadow-lg transition-transform hover:scale-105 sm:mx-0">
       {/* Immagine */}
       <Image
         src={`${event.image}`}
