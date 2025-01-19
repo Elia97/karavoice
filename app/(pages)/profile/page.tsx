@@ -1,5 +1,6 @@
 import BookingsList from "@/app/components/booking-list";
-import { getUserBookings, getUserData } from "./actions";
+import { getUserData } from "@/lib/auth";
+import { getUserBookings } from "@/lib/booking";
 import { Suspense } from "react";
 
 export default async function Profile() {

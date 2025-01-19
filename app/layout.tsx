@@ -6,10 +6,17 @@ import Header from "./components/layout/header";
 import Sidebar from "./components/layout/sidebar";
 import Footer from "./components/layout/footer";
 import { Lobster } from "next/font/google";
+import { Emilys_Candy } from "next/font/google";
 
 const lobster = Lobster({
   weight: "400",
   variable: "--font-lobster",
+  subsets: ["latin"],
+});
+
+const EmilysCandy = Emilys_Candy({
+  weight: "400",
+  variable: "--font-emilys-candy",
   subsets: ["latin"],
 });
 
@@ -30,7 +37,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it">
-      <body className={`${lobster.variable} ${geistSans.variable} antialiased`}>
+      <body
+        className={`${lobster.variable} ${geistSans.variable} ${EmilysCandy.variable} antialiased`}
+      >
         <MenuProvider>
           <Header />
           <Sidebar />

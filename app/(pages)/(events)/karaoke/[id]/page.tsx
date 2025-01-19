@@ -1,17 +1,19 @@
+import { getUserData } from "@/lib/auth";
 import BookingSection from "@/app/components/sections/booking-section";
+import { Event } from "@/app/types";
+import { getEventById } from "@/lib/event";
+import { UUID } from "crypto";
+import { getUserBookings } from "@/lib/booking";
 
 export default async function BookingKaraoke({
   params,
 }: {
-  params: { id: string };
+  params: { id: UUID };
 }) {
   const { id } = await params;
-
-  const res = await fetch(`http://localhost:3001/api/events/${id}`, {
-    cache: "no-store", // Evita la cache per ottenere dati aggiornati
-  });
-
-  const event = await res.json();
+  const event: Event = await getEventById(id);
+  const userData = await getUserData();
+  const userBookings = await getUserBookings();
 
   if (!event) {
     return (
@@ -21,5 +23,11 @@ export default async function BookingKaraoke({
     );
   }
 
-  return <BookingSection event={event} />;
+  return (
+    <BookingSection
+      event={event}
+      userId={userData.id}
+      userBookings={userBookings}
+    />
+  );
 }

@@ -76,7 +76,7 @@ const LoginForm: FC = () => {
         </div>
         <button
           type="submit"
-          className="mt-4 rounded-lg bg-neon-pink px-8 py-4 text-base font-medium text-white transition-all hover:scale-105 md:text-lg lg:text-xl xl:text-2xl"
+          className="mt-4 rounded-lg bg-gradient-to-r px-8 py-4 text-base font-medium text-white transition-all hover:scale-105 md:text-lg lg:text-xl xl:text-2xl dark:from-fuchsia-950 dark:to-sky-950"
         >
           Accedi
         </button>

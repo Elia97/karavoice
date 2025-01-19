@@ -7,8 +7,9 @@
   --foreground: #171717;
   --neon-pink: #ff00ff;
   --neon-blue: #00ffff;
-  --font-lobster: "Lobster", cursive;
+  --font-lobster: "Lobster";
   --font-geist-sans: "Geist Sans";
+  --font-emilys-candy: "Emilys Candy";
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,7 +26,7 @@ body {
 }
 
 h1 {
-  font-family: var(--font-lobster);
+  font-family: var(--font-emilys-candy);
 }
 
 @layer utilities {

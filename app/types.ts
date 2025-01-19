@@ -44,6 +44,7 @@ export interface Booking {
   user: User;
   event: Event;
   status: "pending" | "confirmed" | "canceled";
+  participants: number;
   notes: string;
   createdAt: string;
   updatedAt: string;

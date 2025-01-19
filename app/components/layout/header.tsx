@@ -28,7 +28,7 @@ const Header: FC = () => {
     <header
       className={`fixed left-0 top-0 z-10 flex h-16 w-full items-center justify-between px-4 ${
         isScrolled
-          ? "bg-neutral-50 shadow shadow-neutral-200 dark:bg-neutral-950 dark:shadow-neutral-800"
+          ? "bg-neutral-50 shadow shadow-neutral-200 dark:bg-fuchsia-950 dark:shadow-fuchsia-900"
           : "bg-transparent"
       }`}
     >

@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Event } from "@/app/types";
@@ -12,9 +12,24 @@ interface EventCardProps {
 
 const EventCard: FC<EventCardProps> = ({ event }) => {
   const pathname = usePathname();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch("api/auth/status");
+        const data = await res.json();
+        setIsLoggedIn(data.loggedIn);
+      } catch {
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   return (
-    <div className="mx-auto max-w-sm rounded-xl bg-neutral-900 shadow-lg transition-transform hover:scale-105 sm:mx-0">
+    <div className="mx-auto max-w-sm rounded-xl bg-gradient-to-r shadow-lg transition-transform hover:scale-105 sm:mx-0 dark:from-fuchsia-950 dark:to-sky-950">
       {/* Immagine */}
       <Image
         src={`${event.image}`}
@@ -43,7 +58,8 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
           <Link href={`${pathname}/${event.id}`}>
             <button
               type="button"
-              className="rounded-lg bg-neon-pink px-4 py-2 text-base font-medium text-white transition-all hover:scale-105"
+              disabled={!isLoggedIn}
+              className="rounded-lg bg-gradient-to-l px-4 py-2 text-base font-medium text-white transition-all hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 dark:from-fuchsia-950 dark:to-sky-950 dark:disabled:bg-neutral-800"
               onClick={() => window.scrollTo(0, 0)}
             >
               Prenota ora

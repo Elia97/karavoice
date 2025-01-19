@@ -44,7 +44,7 @@ const AuthSection: FC = () => {
             <button
               type="button"
               onClick={() => setIsRegistering(!isRegistering)}
-              className="w-full rounded-lg bg-neutral-900 px-8 py-4 text-base font-medium text-white shadow-lg transition-all hover:scale-105 md:text-lg lg:text-xl xl:text-2xl"
+              className="w-full rounded-lg bg-gradient-to-r px-8 py-4 text-base font-medium text-white shadow-lg transition-all hover:scale-105 md:text-lg lg:text-xl xl:text-2xl dark:from-fuchsia-950 dark:to-sky-950"
             >
               {isRegistering ? "Accedi" : "Registrati"}
             </button>

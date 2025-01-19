@@ -2,7 +2,7 @@ import { FC } from "react";
 
 const Footer: FC = () => {
   return (
-    <footer className="px-4 py-12">
+    <footer className="bg-sky-950 px-4 py-12">
       <div className="mx-auto max-w-screen-xl">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-6">
           <div>
@@ -30,8 +30,8 @@ const Footer: FC = () => {
         <hr className="my-6 sm:mx-auto lg:my-8" />
         <div className="space-y-4 sm:flex sm:items-center sm:justify-between">
           <span className="text-primary-500 dark:text-primary-400 text-sm sm:text-center">
-            © 2025 <span className="hover:underline">KaraVoice™</span>. Tutti i
-            diritti riservati.
+            © 2025 <span className="hover:underline">KaraVoice™</span>. Tutti
+            i diritti riservati.
           </span>
         </div>
       </div>

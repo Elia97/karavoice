@@ -2,7 +2,6 @@
 
 import { FC, useRef } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Social from "../social-icons";
 
 const HeroSection: FC = () => {
@@ -10,22 +9,7 @@ const HeroSection: FC = () => {
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
-      {/* Background Image */}
-      <Image
-        src="/concert-background.jpg"
-        alt="Live concert with crowd"
-        fill
-        className="object-cover"
-        quality={100}
-        priority
-      />
-
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/60" />
-
-      {/* Main Content */}
-
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-4">
+      <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b px-4 dark:from-fuchsia-950 dark:via-sky-950 dark:to-neutral-950">
         <div className="mb-8 max-w-screen-lg text-center">
           <motion.h1
             initial={{ opacity: 0, y: 100 }}
@@ -80,7 +64,7 @@ const HeroSection: FC = () => {
                 buttonRef.current.style.transition = "transform 0.2s ease-in";
               }
             }}
-            className="rounded-lg bg-neon-pink px-8 py-4 text-base font-medium text-white"
+            className="rounded-lg bg-gradient-to-r px-8 py-4 text-base font-medium text-white dark:from-fuchsia-950 dark:to-sky-950"
             onClick={() =>
               window.scroll({
                 top: (document.getElementById("events")?.offsetTop ?? 0) - 64,

@@ -22,7 +22,6 @@ const ServiceSection: FC = () => {
               title="Karaoke"
               description="Canta a squarciagola con amici e sconosciuti nelle nostre sale."
               icon={Mic}
-              color="bg-purple-600"
             />
           </Link>
           <Link href={"/dj-set"}>
@@ -30,7 +29,6 @@ const ServiceSection: FC = () => {
               title="DJ Set"
               description="Vivi i migliori beat dei più grandi DJ in un'atmosfera elettrizzante."
               icon={Headphones}
-              color="bg-blue-500"
             />
           </Link>
           <Link href={"/live-music"} className="md:col-span-2 lg:col-span-1">
@@ -38,7 +36,6 @@ const ServiceSection: FC = () => {
               title="Live Music"
               description="Goditi performance intime di musicisti talentuosi di diversi generi."
               icon={Music}
-              color="bg-green-500"
             />
           </Link>
         </div>

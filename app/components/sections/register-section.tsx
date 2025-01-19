@@ -21,7 +21,7 @@ const RegisterSection: FC = () => {
           <Link href={"/auth"}>
             <button
               type="button"
-              className="rounded-lg bg-neon-pink px-8 py-4 text-base font-medium text-white transition-all hover:scale-105"
+              className="rounded-lg bg-gradient-to-r px-8 py-4 text-base font-medium text-white transition-all hover:scale-105 dark:from-fuchsia-950 dark:to-sky-950"
             >
               Registrati ora
             </button>

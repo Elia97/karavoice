@@ -22,11 +22,14 @@ const BookingsList: React.FC<BookingsListProps> = ({ initialBookings }) => {
         userBookings.map((booking) => (
           <BookingCard
             key={booking.id}
-            title={booking.event.name}
-            location={booking.event.location.name}
-            date={booking.event.date}
-            start_time={booking.event.start_time}
             id={booking.id}
+            status={booking.status}
+            participants={booking.participants}
+            notes={booking.notes}
+            event_name={booking.event.name}
+            event_location_name={booking.event.location.name}
+            event_date={booking.event.date}
+            event_start_time={booking.event.start_time}
             onDelete={handleDeleteBooking} // Passa la funzione onDelete
           />
         ))
