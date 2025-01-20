@@ -5,6 +5,7 @@ import { Event, Booking } from "@/app/types";
 import Image from "next/image";
 import BookingForm from "../forms/booking-form";
 import { UUID } from "crypto";
+import Map from "../map";
 
 interface BookingSectionProps {
   event: Event;
@@ -72,6 +73,13 @@ const BookingSection: FC<BookingSectionProps> = ({
         <div className="px-4 py-6 text-center xl:col-span-2 xl:max-w-screen-lg">
           <p className="text-lg leading-relaxed">{event.description}</p>
         </div>
+      </div>
+
+      <div className="py-12">
+        <Map
+          lat={Number(event.location.latitude)}
+          lng={Number(event.location.longitude)}
+        />
       </div>
 
       {/* Modale */}

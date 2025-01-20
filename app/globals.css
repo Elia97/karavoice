@@ -25,7 +25,8 @@ body {
   font-family: var(--font-geist-sans);
 }
 
-h1 {
+h1,
+span {
   font-family: var(--font-emilys-candy);
 }
 

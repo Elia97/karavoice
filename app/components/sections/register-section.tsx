@@ -1,14 +1,18 @@
 import { FC } from "react";
-import Logo from "../layout/logo";
 import Link from "next/link";
+import Image from "next/image";
 
 const RegisterSection: FC = () => {
   return (
-    <section className="mx-auto max-w-screen-xl px-4 py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <div className="flex items-center justify-center pb-12">
-          <Logo />
-        </div>
+    <section className="mx-auto max-w-screen-xl px-4 py-6 lg:py-12">
+      <div className="grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2">
+        <Image
+          src={"/karavoice-marica-mey.webp"}
+          alt="karavoice-marica-mey"
+          width={500}
+          height={300}
+          className="rounded-lg"
+        />
         <div className="flex flex-col justify-center text-center md:text-left">
           <h2 className="mb-4 text-4xl font-semibold">
             Registrati una volta, prenota senza sforzi

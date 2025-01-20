@@ -29,10 +29,10 @@ const Footer: FC = () => {
         </div>
         <hr className="my-6 sm:mx-auto lg:my-8" />
         <div className="space-y-4 sm:flex sm:items-center sm:justify-between">
-          <span className="text-primary-500 dark:text-primary-400 text-sm sm:text-center">
+          <p className="text-primary-500 dark:text-primary-400 text-sm sm:text-center">
             © 2025 <span className="hover:underline">KaraVoice™</span>. Tutti
             i diritti riservati.
-          </span>
+          </p>
         </div>
       </div>
     </footer>

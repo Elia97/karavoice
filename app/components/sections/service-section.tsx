@@ -7,7 +7,10 @@ import ServiceCard from "../cards/service-card";
 
 const ServiceSection: FC = () => {
   return (
-    <section className="mx-auto max-w-screen-xl px-4 py-12" id="events">
+    <section
+      className="mx-auto max-w-screen-xl px-4 pb-6 pt-3 lg:pb-12"
+      id="events"
+    >
       <div className="text-center">
         <h2 className="mb-4 text-4xl font-semibold">
           Cerca l&apos;Evento che Vuoi
