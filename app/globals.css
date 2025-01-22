@@ -5,11 +5,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --neon-pink: #ff00ff;
-  --neon-blue: #00ffff;
-  --font-lobster: "Lobster";
-  --font-geist-sans: "Geist Sans";
-  --font-emilys-candy: "Emilys Candy";
+  --font-roboto: "Roboto";
+  --font-permanent-marker: "Permanent Marker";
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,26 +19,17 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-roboto);
 }
 
 h1,
-span {
-  font-family: var(--font-emilys-candy);
+h2 {
+  font-family: var(--font-permanent-marker);
 }
 
 @layer utilities {
-  .bg-neon-pink {
-    background-color: var(--neon-pink);
-  }
-  .bg-neon-blue {
-    background-color: var(--neon-blue);
-  }
-  .from-neon-pink {
-    --tw-gradient-from: var(--neon-pink);
-  }
-  .to-neon-blue {
-    --tw-gradient-to: var(--neon-blue);
+  .bg-background {
+    background-color: var(--background);
   }
 }
 

@@ -41,11 +41,11 @@ const Navbar: FC = () => {
               key={link.href}
               onMouseEnter={() => setIsDropdownOpen(true)}
               onMouseLeave={() => setIsDropdownOpen(false)}
-              className={`group relative flex items-center ${eventCategories.some((category) => pathname.startsWith(`/${category.slug}`)) && "border-b"}`}
+              className={`relative flex items-center ${eventCategories.some((category) => pathname.startsWith(`/${category.slug}`)) && "border-b border-sky-500 text-sky-500"}`}
             >
               <button
                 type="button"
-                className={`p-3 ${
+                className={`p-3 hover:text-sky-500 ${
                   pathname.startsWith(link.href) && "border-b"
                 }`}
               >
@@ -53,11 +53,11 @@ const Navbar: FC = () => {
               </button>
               <ChevronDown className="cursor-pointer" />
               <ul
-                className={`absolute top-full flex-col text-nowrap rounded-lg bg-neutral-950 shadow-lg ${isDropdownOpen ? "flex" : "hidden"}`}
+                className={`absolute top-full flex-col text-nowrap rounded-lg shadow-lg ${isDropdownOpen ? "flex" : "hidden"}`}
               >
                 {eventCategories.map((category) => {
                   return (
-                    <li key={category.slug} className="py-3">
+                    <li key={category.slug} className="py-3 hover:text-sky-500">
                       <Link
                         href={`/${category.slug}`}
                         className="p-3"
@@ -71,17 +71,18 @@ const Navbar: FC = () => {
               </ul>
             </li>
           ) : (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`p-3 ${
-                (link.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(link.href)) && "border-b"
-              }`}
-            >
-              {link.label}
-            </Link>
+            <li key={link.href} className="hover:text-sky-500">
+              <Link
+                href={link.href}
+                className={`border-sky-500 p-3 ${
+                  (link.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(link.href)) && "border-b text-sky-500"
+                }`}
+              >
+                {link.label}
+              </Link>
+            </li>
           );
         })}
       </ul>

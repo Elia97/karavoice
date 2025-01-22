@@ -2,26 +2,32 @@ import { FC } from "react";
 
 const Footer: FC = () => {
   return (
-    <footer className="bg-sky-950 px-4 py-12">
+    <footer className="bg-gradient-to-b from-background via-sky-300 to-sky-300 px-4 py-12 dark:via-sky-950 dark:to-sky-950">
       <div className="mx-auto max-w-screen-xl">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-6">
           <div>
-            <h2 className="mb-6 uppercase">Risorse</h2>
-            <ul className="space-y-4">
+            <h3 className="mb-4 text-2xl font-semibold tracking-wider">
+              Risorse
+            </h3>
+            <ul className="space-y-2">
               <li>Eventi</li>
               <li>Contattaci</li>
             </ul>
           </div>
           <div>
-            <h2 className="mb-6 uppercase">Seguici su</h2>
-            <ul className="space-y-4">
+            <h3 className="mb-4 text-2xl font-semibold tracking-wider">
+              Seguici su
+            </h3>
+            <ul className="space-y-2">
               <li>Facebook</li>
               <li>Instagram</li>
             </ul>
           </div>
           <div className="col-span-2 w-full sm:col-span-1">
-            <h2 className="mb-6 uppercase">Legale</h2>
-            <ul className="space-y-4">
+            <h3 className="mb-4 text-2xl font-semibold tracking-wider">
+              Legale
+            </h3>
+            <ul className="space-y-2">
               <li>Privacy Policy</li>
               <li>Termini e condizioni</li>
             </ul>

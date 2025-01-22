@@ -29,7 +29,7 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
   }, []);
 
   return (
-    <div className="mx-auto max-w-sm rounded-xl bg-gradient-to-r shadow-lg transition-transform hover:scale-105 sm:mx-0 dark:from-fuchsia-950 dark:to-sky-950">
+    <div className="mx-auto max-w-sm rounded-xl bg-gradient-to-r from-fuchsia-300 to-sky-300 shadow-lg transition-transform hover:scale-105 sm:mx-0 dark:from-fuchsia-950 dark:to-sky-950">
       {/* Immagine */}
       <Image
         src={`${event.image}`}
@@ -59,7 +59,15 @@ const EventCard: FC<EventCardProps> = ({ event }) => {
             <button
               type="button"
               disabled={!isLoggedIn}
-              className="rounded-lg bg-gradient-to-l px-4 py-2 text-base font-medium text-white transition-all hover:scale-105 disabled:cursor-not-allowed disabled:hover:scale-100 dark:from-fuchsia-950 dark:to-sky-950 dark:disabled:bg-neutral-800"
+              className={`rounded-lg ${
+                isLoggedIn
+                  ? "bg-gradient-to-l from-fuchsia-300 to-sky-300 transition-all duration-500 hover:scale-105"
+                  : "cursor-not-allowed bg-gray-300"
+              } px-4 py-2 text-base font-medium ${
+                isLoggedIn
+                  ? "dark:from-fuchsia-950 dark:to-sky-950"
+                  : "dark:bg-gray-950"
+              }`}
               onClick={() => window.scrollTo(0, 0)}
             >
               Prenota ora

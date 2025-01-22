@@ -1,27 +1,21 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
 import "./globals.css";
 import { MenuProvider } from "./context-api/providers";
 import Header from "./components/layout/header";
 import Sidebar from "./components/layout/sidebar";
 import Footer from "./components/layout/footer";
-import { Lobster } from "next/font/google";
-import { Emilys_Candy } from "next/font/google";
+import { Permanent_Marker } from "next/font/google";
+import { Roboto } from "next/font/google";
 
-const lobster = Lobster({
+const permanentMarker = Permanent_Marker({
   weight: "400",
-  variable: "--font-lobster",
+  variable: "--font-permanent_marker",
   subsets: ["latin"],
 });
 
-const EmilysCandy = Emilys_Candy({
+const roboto = Roboto({
   weight: "400",
-  variable: "--font-emilys-candy",
-  subsets: ["latin"],
-});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+  variable: "--font-roboto",
   subsets: ["latin"],
 });
 
@@ -38,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="it">
       <body
-        className={`${lobster.variable} ${geistSans.variable} ${EmilysCandy.variable} antialiased`}
+        className={`${roboto.variable} ${permanentMarker.variable} antialiased`}
       >
         <MenuProvider>
           <Header />

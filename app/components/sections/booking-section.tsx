@@ -43,7 +43,7 @@ const BookingSection: FC<BookingSectionProps> = ({
           height={360}
           className="-px-4 md:rounded-xl"
         />
-        <div className="px-4 py-6 text-center">
+        <div className="flex flex-col px-4 py-6 text-center">
           <h1 className="mb-6 text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
             {event.name}
           </h1>

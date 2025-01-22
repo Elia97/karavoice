@@ -17,7 +17,7 @@ const BookingsList: React.FC<BookingsListProps> = ({ initialBookings }) => {
   };
 
   return (
-    <ul className="space-y-3">
+    <ul className="mx-auto max-w-screen-md space-y-3">
       {userBookings.length > 0 ? (
         userBookings.map((booking) => (
           <BookingCard

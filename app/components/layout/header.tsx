@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, LogIn, LogOut } from "lucide-react";
+import { Menu, LogIn } from "lucide-react";
 import Logo from "./logo";
 import { useContext, FC } from "react";
 import { MenuContext } from "@/app/context-api/contexts";
@@ -28,7 +28,7 @@ const Header: FC = () => {
     <header
       className={`fixed left-0 top-0 z-10 flex h-16 w-full items-center justify-between px-4 ${
         isScrolled
-          ? "bg-neutral-50 shadow shadow-neutral-200 dark:bg-fuchsia-950 dark:shadow-fuchsia-900"
+          ? "bg-fuchsia-300 shadow shadow-fuchsia-200 dark:bg-fuchsia-950 dark:shadow-fuchsia-900"
           : "bg-transparent"
       }`}
     >
@@ -41,29 +41,18 @@ const Header: FC = () => {
       <Logo />
       <div className="flex items-center gap-8">
         <Navbar />
-        {!false ? (
-          <Link href={"/auth"}>
-            <button
-              type="button"
-              className="group flex items-center gap-2 rounded-full p-1.5 lg:text-lg"
-            >
-              <span className="invisible hover:underline sm:visible lg:invisible lg:group-hover:visible">
-                Accedi
-              </span>
-              <LogIn className="lg:size-7" />
-            </button>
-          </Link>
-        ) : (
+
+        <Link href={"/auth"}>
           <button
             type="button"
             className="group flex items-center gap-2 rounded-full p-1.5 lg:text-lg"
           >
-            <span className="invisible pl-1.5 hover:underline sm:visible lg:invisible lg:group-hover:visible">
-              Disconnetti
+            <span className="invisible hover:underline sm:visible lg:invisible lg:group-hover:visible">
+              Accedi
             </span>
-            <LogOut className="lg:size-7" />
+            <LogIn className="lg:size-7" />
           </button>
-        )}
+        </Link>
       </div>
     </header>
   );
