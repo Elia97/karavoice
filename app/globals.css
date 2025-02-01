@@ -22,14 +22,16 @@ body {
   font-family: var(--font-roboto);
 }
 
-h1,
-h2 {
+h1 {
   font-family: var(--font-permanent-marker);
 }
 
 @layer utilities {
   .bg-background {
     background-color: var(--background);
+  }
+  .bg-foreground {
+    background-color: var(--foreground);
   }
 }
 

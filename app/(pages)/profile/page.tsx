@@ -1,11 +1,11 @@
 import BookingsList from "@/app/components/booking-list";
 import { getUserData } from "@/lib/auth";
 import { getUserBookings } from "@/lib/booking";
-import { Suspense } from "react";
+import { User, Booking } from "@/app/types";
 
 export default async function Profile() {
-  const userData = await getUserData();
-  const userBookings = await getUserBookings();
+  const userData: User = await getUserData();
+  const userBookings: Booking[] = await getUserBookings();
 
   return (
     <section className="mx-auto mt-16 min-h-screen max-w-screen-xl px-4 py-6">
@@ -16,9 +16,7 @@ export default async function Profile() {
         <h2 className="mb-8 text-center text-2xl font-semibold sm:text-3xl lg:text-4xl">
           Le tue prenotazioni
         </h2>
-        <Suspense fallback={<div>Caricamento...</div>}>
-          <BookingsList initialBookings={userBookings} />
-        </Suspense>
+        <BookingsList initialBookings={userBookings} />
       </div>
     </section>
   );

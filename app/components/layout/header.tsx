@@ -3,13 +3,14 @@
 import { Menu, LogIn } from "lucide-react";
 import Logo from "./logo";
 import { useContext, FC } from "react";
-import { MenuContext } from "@/app/context-api/contexts";
+import { MenuContext, UserContext } from "@/app/context-api/contexts";
 import { useState, useEffect } from "react";
 import Navbar from "./navbar";
 import Link from "next/link";
 
 const Header: FC = () => {
   const { toggleMenu } = useContext(MenuContext);
+  const { isLoggedIn } = useContext(UserContext);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -42,13 +43,13 @@ const Header: FC = () => {
       <div className="flex items-center gap-8">
         <Navbar />
 
-        <Link href={"/auth"}>
+        <Link href={isLoggedIn ? "/admin" : "/auth"}>
           <button
             type="button"
             className="group flex items-center gap-2 rounded-full p-1.5 lg:text-lg"
           >
             <span className="invisible hover:underline sm:visible lg:invisible lg:group-hover:visible">
-              Accedi
+              {isLoggedIn ? "Entra" : "Accedi"}
             </span>
             <LogIn className="lg:size-7" />
           </button>

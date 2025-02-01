@@ -7,7 +7,17 @@ interface MenuContextType {
   toggleMenu: () => void;
 }
 
+interface UserContextType {
+  isLoggedIn: boolean;
+  authEvents: EventTarget;
+}
+
 export const MenuContext = createContext<MenuContextType>({
   toggledMenu: false,
   toggleMenu: () => {},
+});
+
+export const UserContext = createContext<UserContextType>({
+  isLoggedIn: false,
+  authEvents: new EventTarget(),
 });

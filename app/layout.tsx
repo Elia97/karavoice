@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { MenuProvider } from "./context-api/providers";
-import Header from "./components/layout/header";
-import Sidebar from "./components/layout/sidebar";
-import Footer from "./components/layout/footer";
+import { MenuProvider, UserProvider } from "./context-api/providers";
+import LayoutWrapper from "./components/layout-wrapper"; // Wrapper lato client
 import { Permanent_Marker } from "next/font/google";
 import { Roboto } from "next/font/google";
 
@@ -34,12 +32,11 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${permanentMarker.variable} antialiased`}
       >
-        <MenuProvider>
-          <Header />
-          <Sidebar />
-        </MenuProvider>
-        <main>{children}</main>
-        <Footer />
+        <UserProvider>
+          <MenuProvider>
+            <LayoutWrapper>{children}</LayoutWrapper>
+          </MenuProvider>
+        </UserProvider>
       </body>
     </html>
   );

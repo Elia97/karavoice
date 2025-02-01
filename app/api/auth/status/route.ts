@@ -5,7 +5,7 @@ export async function GET(req: NextRequest) {
   const token = cookies.get("auth_token")?.value;
 
   return NextResponse.json(
-    { loggedIn: !!token }, // true se il token esiste
+    { isLoggedIn: !!token }, // true se il token esiste
     { status: 200 },
   );
 }

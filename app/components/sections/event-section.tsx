@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Event } from "@/app/types";
 import EventCard from "../cards/event-card";
 
@@ -8,33 +8,51 @@ interface EventSectionProps {
   events: Event[];
 }
 
+const categories: string[] = ["karaoke", "dj set", "live music"];
+
 const EventSection: FC<EventSectionProps> = ({ events }) => {
+  const [filter, setFilter] = useState<string>("");
+
+  const filteredEvents: Event[] = events?.filter((event) =>
+    event.category.startsWith(filter),
+  );
+
+  const handleClick = (e: React.MouseEvent<HTMLUListElement>) => {
+    const target = e.target as HTMLElement;
+    const filterValue = target.dataset.filter;
+    if (filterValue) setFilter(filterValue);
+  };
+
   return (
-    <section className="min-h-screen overflow-hidden">
-      {/* Video Background */}
-      {/* <video
-        autoPlay
-        loop
-        muted
-        className="absolute h-full w-full object-cover"
-      >
-        <source src="/background.mp4" type="video/mp4" />
-      </video> */}
-      <div className="relative mx-auto mt-16 max-w-screen-xl px-4 py-6">
-        <h2 className="mb-8 text-center text-4xl font-semibold">
-          Prossimi Eventi
-        </h2>
-        <div className="grid justify-items-center gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-4">
-          {events.length > 0 ? (
-            events.map((event: Event) => (
-              <EventCard key={event.id} event={event} />
-            ))
-          ) : (
-            <p className="col-span-3 text-lg font-medium md:text-xl lg:text-2xl">
-              Nessun evento disponibile
-            </p>
-          )}
-        </div>
+    <section className="mx-auto mt-16 min-h-screen max-w-screen-xl overflow-hidden px-4 py-6">
+      <h2 className="mb-8 text-center text-4xl font-semibold">
+        Prossimi Eventi
+      </h2>
+      <div className="my-4">
+        <ul className="flex justify-center gap-4" onClick={handleClick}>
+          {categories.map((category, index) => {
+            return (
+              <li
+                key={index}
+                className={`rounded-full border px-4 py-2 hover:cursor-pointer hover:bg-sky-950 ${filter === category && "bg-sky-950"}`}
+                data-filter={category}
+              >
+                {category}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      <div className="grid justify-items-center gap-8 md:grid-cols-2 xl:grid-cols-3 xl:gap-4">
+        {filteredEvents.length > 0 ? (
+          filteredEvents.map((event: Event) => (
+            <EventCard key={event.id} event={event} />
+          ))
+        ) : (
+          <p className="col-span-3 text-lg font-medium md:text-xl lg:text-2xl">
+            Nessun evento disponibile
+          </p>
+        )}
       </div>
     </section>
   );

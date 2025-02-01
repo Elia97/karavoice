@@ -1,10 +1,11 @@
 "use client";
 
-import { FC, useState, useEffect } from "react";
+import { FC, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Event } from "@/app/types";
 import { usePathname } from "next/navigation";
+import { UserContext } from "@/app/context-api/contexts";
 
 interface EventCardProps {
   event: Event;
@@ -12,21 +13,8 @@ interface EventCardProps {
 
 const EventCard: FC<EventCardProps> = ({ event }) => {
   const pathname = usePathname();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch("api/auth/status");
-        const data = await res.json();
-        setIsLoggedIn(data.loggedIn);
-      } catch {
-        setIsLoggedIn(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
+  const { isLoggedIn } = useContext(UserContext);
 
   return (
     <div className="mx-auto max-w-sm rounded-xl bg-gradient-to-r from-fuchsia-300 to-sky-300 shadow-lg transition-transform hover:scale-105 sm:mx-0 dark:from-fuchsia-950 dark:to-sky-950">

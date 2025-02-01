@@ -39,9 +39,8 @@ const HeroSection: FC = () => {
             }}
             className="mb-8 text-lg sm:text-2xl"
           >
-            Trasforma un venerdì qualunque in una serata speciale. Lasciati
-            ispirare dai nostri eventi musicali, pensati per regalarti emozioni,
-            divertimento e ricordi indimenticabili.
+            Trasforma un venerdì qualunque in una serata speciale con i nostri
+            eventi.
           </motion.p>
 
           <motion.button

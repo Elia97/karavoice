@@ -1,6 +1,7 @@
 "use client";
 
-import { FC, FormEvent, useState } from "react";
+import { FC, FormEvent, useState, useContext } from "react";
+import { UserContext } from "@/app/context-api/contexts";
 import { useRouter } from "next/navigation";
 interface FormData {
   email: string;
@@ -8,11 +9,12 @@ interface FormData {
 }
 
 const LoginForm: FC = () => {
-  const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
   });
+  const router = useRouter();
+  const { authEvents } = useContext(UserContext);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,10 +29,11 @@ const LoginForm: FC = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Login riuscito:", data);
-        router.push("/profile");
+        authEvents?.dispatchEvent(new Event("authChange"));
+        router.push("/");
       }
-    } catch {
-      console.log("errore");
+    } catch (error) {
+      console.log(`Errore: ${(error as Error).message}`);
     }
   };
 

@@ -9,7 +9,7 @@ const AuthSection: FC = () => {
   const [isRegistering, setIsRegistering] = useState(true);
 
   return (
-    <section className="mx-auto mt-16 h-screen max-w-screen-xl px-4 py-6">
+    <section className="mx-auto h-screen max-w-screen-xl px-4 py-6">
       <div className="w-full overflow-hidden">
         <div className="flex flex-col md:flex-row">
           <AnimatePresence initial={false} mode="wait">

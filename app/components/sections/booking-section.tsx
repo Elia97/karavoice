@@ -23,7 +23,7 @@ const BookingSection: FC<BookingSectionProps> = ({
 
   useEffect(() => {
     const hasBooking = userBookings.some(
-      (booking) => (booking.event.id = event.id),
+      (booking) => booking.event.id === event.id,
     );
     setIsBooked(hasBooking);
   }, [userBookings, event.id]);
@@ -35,18 +35,36 @@ const BookingSection: FC<BookingSectionProps> = ({
 
   return (
     <section className="mx-auto mt-16 min-h-screen max-w-screen-xl">
-      <div className="grid items-center justify-items-center gap-8 sm:pt-6 xl:grid-cols-2">
+      <div className="flex flex-col items-center gap-8 xl:flex-row xl:px-4 xl:py-6">
         <Image
           src={event.image}
           alt={event.name}
           width={640}
           height={360}
-          className="-px-4 md:rounded-xl"
+          className="mx-auto xl:mx-0 xl:rounded-xl"
         />
-        <div className="flex flex-col px-4 py-6 text-center">
+        <div className="text-center">
           <h1 className="mb-6 text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
             {event.name}
           </h1>
+          <button
+            type="button"
+            className="rounded-lg bg-gradient-to-r px-8 py-4 text-base font-medium text-white dark:from-fuchsia-950 dark:to-sky-950"
+            disabled={isBooked}
+            onClick={() => setIsOpenedModal(true)}
+          >
+            {isBooked ? "Prenotato" : "Prenota"}
+          </button>
+        </div>
+      </div>
+      <div className="flex flex-col items-center gap-8 px-4 py-6 xl:flex-row">
+        <div className="rounded-lg bg-neutral-900 px-4 py-6">
+          <p className="max-w-2xl text-lg leading-relaxed">
+            {event.description}
+          </p>
+        </div>
+        <div className="rounded-lg bg-neutral-900 px-4 py-6">
+          <h3>Dettagli evento</h3>
           <p className="text-xl font-medium">{event.location.name}</p>
           <small className="mt-2 block tracking-wider">
             {`${event.location.address}, ${event.location.zip_code} - ${event.location.city}, ${event.location.province}`}
@@ -61,17 +79,6 @@ const BookingSection: FC<BookingSectionProps> = ({
             -{" "}
             {`dalle ore ${event.start_time?.slice(0, 5)} alle ore ${event.end_time?.slice(0, 5)}`}
           </p>
-          <button
-            type="button"
-            className="rounded-lg bg-gradient-to-r px-8 py-4 text-base font-medium text-white dark:from-fuchsia-950 dark:to-sky-950"
-            disabled={isBooked}
-            onClick={() => setIsOpenedModal(true)}
-          >
-            {isBooked ? "Prenotato" : "Prenota"}
-          </button>
-        </div>
-        <div className="px-4 py-6 text-center xl:col-span-2 xl:max-w-screen-lg">
-          <p className="text-lg leading-relaxed">{event.description}</p>
         </div>
       </div>
 
