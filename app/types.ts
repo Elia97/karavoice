@@ -1,31 +1,31 @@
 import { UUID } from "crypto";
 
 export interface Event {
-  id: UUID; // ID univoco dell'evento
-  name: string; // Nome dell'evento
-  description: string; // Descrizione dettagliata
-  category: "karaoke" | "dj set" | "live music"; // Categoria dell'evento
-  image: string; // URL dell'immagine (opzionale)
+  id: UUID;
+  name: string;
+  description: string;
+  category: "karaoke" | "dj set" | "live music";
+  image: string;
   location: Location;
-  start_time?: string; // Orario (formato HH:mm:ss)
-  end_time?: string; // Orario (formato HH:mm:ss)
-  date: Date; // Data specifica (formato ISO, opzionale)
-  createdAt: string; // Timestamp di creazione
-  updatedAt: string; // Timestamp di aggiornamento
+  start_time?: string;
+  end_time?: string;
+  date: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Location {
-  id: UUID; // ID univoco della location
-  name: string; // Nome della location
-  address: string; // Indirizzo
-  city: string; // Città
-  province: string; // Provincia
-  zip_code: string; // Codice postale
-  country: string; // Paese
-  latitude: number; // Latitudine
-  longitude: number; // Longitudine
-  createdAt: string; // Timestamp di creazione
-  updatedAt: string; // Timestamp di aggiornamento
+  id: UUID;
+  name: string;
+  address: string;
+  city: string;
+  province: string;
+  zip_code: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface User {

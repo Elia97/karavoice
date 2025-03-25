@@ -2,20 +2,20 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { MenuProvider, UserProvider } from "./context-api/providers";
 import LayoutWrapper from "./components/layout-wrapper"; // Wrapper lato client
-import { Permanent_Marker } from "next/font/google";
-import { Roboto } from "next/font/google";
+// import { Permanent_Marker } from "next/font/google";
+// import { Roboto } from "next/font/google";
 
-const permanentMarker = Permanent_Marker({
-  weight: "400",
-  variable: "--font-permanent_marker",
-  subsets: ["latin"],
-});
+// const permanentMarker = Permanent_Marker({
+//   weight: "400",
+//   variable: "--font-permanent_marker",
+//   subsets: ["latin"],
+// });
 
-const roboto = Roboto({
-  weight: "400",
-  variable: "--font-roboto",
-  subsets: ["latin"],
-});
+// const roboto = Roboto({
+//   weight: "400",
+//   variable: "--font-roboto",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "KaraVoice",
@@ -29,9 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it">
-      <body
-        className={`${roboto.variable} ${permanentMarker.variable} antialiased`}
-      >
+      <body className={`antialiased`}>
         <UserProvider>
           <MenuProvider>
             <LayoutWrapper>{children}</LayoutWrapper>
