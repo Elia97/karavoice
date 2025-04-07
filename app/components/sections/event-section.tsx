@@ -1,14 +1,14 @@
 "use client";
 
-import { FC, useState } from "react";
 import { Event } from "@/app/types";
+import { FC, useState } from "react";
 import EventCard from "../cards/event-card";
 
 interface EventSectionProps {
   events: Event[];
 }
 
-const categories: string[] = ["karaoke", "dj set", "live music"];
+const categories: string[] = ["tutti", "karaoke", "dj set", "live music"];
 
 const EventSection: FC<EventSectionProps> = ({ events }) => {
   const [filter, setFilter] = useState<string>("");
@@ -20,7 +20,11 @@ const EventSection: FC<EventSectionProps> = ({ events }) => {
   const handleClick = (e: React.MouseEvent<HTMLUListElement>) => {
     const target = e.target as HTMLElement;
     const filterValue = target.dataset.filter;
-    if (filterValue) setFilter(filterValue);
+    if (filterValue === "tutti") {
+      setFilter("");
+    } else {
+      setFilter(filterValue!);
+    }
   };
 
   return (

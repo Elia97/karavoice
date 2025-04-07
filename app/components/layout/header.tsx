@@ -1,16 +1,15 @@
 "use client";
 
-import { Menu, LogIn } from "lucide-react";
-import Logo from "./logo";
-import { useContext, FC } from "react";
 import { MenuContext, UserContext } from "@/app/context-api/contexts";
-import { useState, useEffect } from "react";
-import Navbar from "./navbar";
+import { LogIn, Menu } from "lucide-react";
 import Link from "next/link";
+import { FC, useContext, useEffect, useState } from "react";
+import Logo from "./logo";
+import Navbar from "./navbar";
 
 const Header: FC = () => {
   const { toggleMenu } = useContext(MenuContext);
-  const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn, isAdmin } = useContext(UserContext);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -43,7 +42,7 @@ const Header: FC = () => {
       <div className="flex items-center gap-8">
         <Navbar />
 
-        <Link href={isLoggedIn ? "/admin" : "/auth"}>
+        <Link href={isLoggedIn ? (isAdmin ? "/admin" : "/profile") : "/auth"}>
           <button
             type="button"
             className="group flex items-center gap-2 rounded-full p-1.5 lg:text-lg"

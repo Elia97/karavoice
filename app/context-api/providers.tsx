@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState, useRef } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { MenuContext, UserContext } from "./contexts";
 
 interface ProviderProps {
@@ -23,6 +23,7 @@ export const MenuProvider = ({ children }: ProviderProps) => {
 
 export const UserProvider = ({ children }: ProviderProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   // useRef mantiene lo stesso oggetto EventTarget tra i render
   const authEventsRef = useRef(new EventTarget());
@@ -33,6 +34,7 @@ export const UserProvider = ({ children }: ProviderProps) => {
       if (response.ok) {
         const data = await response.json();
         setIsLoggedIn(data.isLoggedIn);
+        setIsAdmin(data.isAdmin);
       }
     } catch (error) {
       console.error("Errore nel recuperare lo stato di autenticazione:", error);
@@ -53,7 +55,11 @@ export const UserProvider = ({ children }: ProviderProps) => {
     };
   }, []);
 
-  const contextValue = { isLoggedIn, authEvents: authEventsRef.current };
+  const contextValue = {
+    isLoggedIn,
+    isAdmin,
+    authEvents: authEventsRef.current,
+  };
 
   return (
     <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>

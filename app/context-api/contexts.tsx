@@ -9,6 +9,7 @@ interface MenuContextType {
 
 interface UserContextType {
   isLoggedIn: boolean;
+  isAdmin: boolean;
   authEvents: EventTarget;
 }
 
@@ -19,5 +20,6 @@ export const MenuContext = createContext<MenuContextType>({
 
 export const UserContext = createContext<UserContextType>({
   isLoggedIn: false,
+  isAdmin: false,
   authEvents: new EventTarget(),
 });

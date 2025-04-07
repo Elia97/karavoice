@@ -1,10 +1,10 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
-import { Event, Booking } from "@/app/types";
-import Image from "next/image";
-import BookingForm from "../forms/booking-form";
+import { Booking, Event } from "@/app/types";
 import { UUID } from "crypto";
+import Image from "next/image";
+import { FC, useEffect, useState } from "react";
+import BookingForm from "../forms/booking-form";
 import Map from "../map";
 
 interface BookingSectionProps {
@@ -35,7 +35,7 @@ const BookingSection: FC<BookingSectionProps> = ({
 
   return (
     <section className="mx-auto mt-16 min-h-screen max-w-screen-xl">
-      <div className="flex flex-col items-center gap-8 xl:flex-row xl:px-4 xl:py-6">
+      <div className="flex flex-col items-center gap-8">
         <Image
           src={event.image}
           alt={event.name}
@@ -57,14 +57,13 @@ const BookingSection: FC<BookingSectionProps> = ({
           </button>
         </div>
       </div>
-      <div className="flex flex-col items-center gap-8 px-4 py-6 xl:flex-row">
+      <div className="flex flex-col items-center gap-8 px-4 py-6">
         <div className="rounded-lg bg-neutral-900 px-4 py-6">
           <p className="max-w-2xl text-lg leading-relaxed">
             {event.description}
           </p>
         </div>
         <div className="rounded-lg bg-neutral-900 px-4 py-6">
-          <h3>Dettagli evento</h3>
           <p className="text-xl font-medium">{event.location.name}</p>
           <small className="mt-2 block tracking-wider">
             {`${event.location.address}, ${event.location.zip_code} - ${event.location.city}, ${event.location.province}`}
