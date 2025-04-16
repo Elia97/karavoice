@@ -1,13 +1,7 @@
 import { UUID } from "crypto";
-import { cookies } from "next/headers";
+import { getAuthToken } from "./auth";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-// Ottieni il token dai cookie
-async function getAuthToken() {
-  const cookieStore = await cookies();
-  return cookieStore.get("auth_token")?.value || null;
-}
 
 export async function getEventById(id: UUID) {
   const token = await getAuthToken();

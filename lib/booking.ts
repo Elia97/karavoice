@@ -1,12 +1,6 @@
-import { cookies } from "next/headers";
+import { getAuthToken } from "./auth";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-// Ottieni il token dai cookie
-async function getAuthToken() {
-  const cookieStore = await cookies();
-  return cookieStore.get("auth_token")?.value || null;
-}
 
 // Recupera le prenotazioni dell'utente
 export async function getUserBookings() {

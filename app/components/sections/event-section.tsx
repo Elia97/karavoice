@@ -38,7 +38,7 @@ const EventSection: FC<EventSectionProps> = ({ events }) => {
             return (
               <li
                 key={index}
-                className={`rounded-full border px-4 py-2 hover:cursor-pointer hover:bg-sky-950 ${filter === category && "bg-sky-950"}`}
+                className={`rounded-full border px-4 py-2 text-xs hover:cursor-pointer hover:bg-sky-950 sm:text-base ${filter === category && "bg-sky-950"}`}
                 data-filter={category}
               >
                 {category}
