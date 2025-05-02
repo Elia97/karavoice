@@ -1,5 +1,5 @@
 import { Building, MapPin, Users } from "lucide-react";
-
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 
 // Dati di esempio per il team
@@ -40,10 +40,12 @@ export default async function ChiSiamoPage() {
       <div className="relative h-[300px] md:h-[400px] rounded-xl overflow-hidden mb-16">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/40 z-10" />
-          <img
+          <Image
             src="/placeholder.svg?height=400&width=1200"
             alt="Chi siamo"
-            className="w-full h-full object-cover"
+            layout="fill"
+            objectFit="cover"
+            priority
           />
         </div>
         <div className="relative z-20 h-full flex items-center">
@@ -149,10 +151,11 @@ export default async function ChiSiamoPage() {
             {teamMembers.map((member) => (
               <Card key={member.nome} className="overflow-hidden">
                 <div className="aspect-square">
-                  <img
+                  <Image
                     src={member.avatar || "/placeholder.svg"}
                     alt={member.nome}
-                    className="w-full h-full object-cover"
+                    layout="fill"
+                    objectFit="cover"
                   />
                 </div>
                 <CardContent className="p-6">

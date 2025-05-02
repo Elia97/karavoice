@@ -18,8 +18,8 @@ export default async function HomePage() {
       <CategorieSection />
       <EventiInEvidenzaSection />
       <FunzionalitàSection />
-      <TestimonianzeSection />
       <CtaSection />
+      <TestimonianzeSection />
     </div>
   );
 }

@@ -1,10 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { Bell, Menu, Search, UserIcon, X, LogOut } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -23,8 +22,8 @@ import {
 } from "@/components/ui/sheet";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useMobile } from "@/hooks/use-mobile";
-import { toast } from "@/hooks/use-toast";
-import { User } from "@/types";
+import { toast } from "sonner";
+import { useAuth } from "@/app/context/authContext";
 
 const navigationLinks = [
   { name: "Home", href: "/" },
@@ -34,55 +33,19 @@ const navigationLinks = [
   { name: "Contatti", href: "/contatti" },
 ];
 
-const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
-
-  // Usiamo useEffect per verificare l'autenticazione solo una volta al montaggio del componente
-  useEffect(() => {
-    // Controlla se esiste un token di autenticazione nel localStorage
-    const authStatus = localStorage.getItem("isAuthenticated") === "true";
-    setIsAuthenticated(authStatus);
-
-    // Dati utente di esempio (in un'app reale verrebbero dal backend)
-    if (authStatus) {
-      setUser({
-        id: "e58ed763-928c-4155-bee9-fdbaaadc15f3",
-        name: "Mario Rossi",
-        email: "mario.rossi@example.com",
-        phone: "1234567890",
-        address: "Via Roma 1",
-        city: "Roma",
-        password: "", // placeholder, should not be used in real apps
-        role: "user",
-        last_login_at: new Date(),
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      });
-    }
-  }, []); // Array di dipendenze vuoto per eseguirlo solo al montaggio
-
-  // Funzione per simulare il logout
-  const logout = useCallback(() => {
-    localStorage.setItem("isAuthenticated", "false");
-    setIsAuthenticated(false);
-    setUser(null);
-  }, []);
-
-  return { isAuthenticated, user, logout };
-};
-
 export function SiteHeader() {
   const isMobile = useMobile();
   const [showSearch, setShowSearch] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
-  const router = useRouter();
+  const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false);
+  const pathname = usePathname();
+
+  const handleCloseMenu = () => setIsSheetOpen(false);
 
   const handleLogout = () => {
     logout();
-    toast({
-      title: "Logout effettuato",
-      description: "Hai effettuato il logout con successo.",
+    toast.success("Logout effettuato con successo", {
+      description: "Sei stato disconnesso dal tuo account.",
     });
 
     // Forzare il ricaricamento della pagina per aggiornare lo stato di autenticazione in tutti i componenti
@@ -90,6 +53,10 @@ export function SiteHeader() {
       window.location.href = "/";
     }, 500);
   };
+
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -155,24 +122,46 @@ export function SiteHeader() {
                           <UserIcon className="h-4 w-4 text-primary" />
                         </div>
                         <div className="flex flex-col space-y-0.5">
-                          <p className="text-sm font-medium">{user?.name}</p>
+                          <p className="text-sm font-medium">{user.name}</p>
                           <p className="text-xs text-muted-foreground">
-                            {user?.email}
+                            {user.email}
                           </p>
                         </div>
                       </div>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem asChild>
-                        <Link href="/profilo">Profilo</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <Link href="/prenotazioni">Le mie prenotazioni</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem asChild>
-                        <Link href="/preferiti">Preferiti</Link>
-                      </DropdownMenuItem>
+                      {user.role === "admin" ? (
+                        <DropdownMenuItem asChild>
+                          <Link href="/admin" className="cursor-pointer">
+                            Dashboard
+                          </Link>
+                        </DropdownMenuItem>
+                      ) : (
+                        <>
+                          <DropdownMenuItem asChild>
+                            <Link href="/profilo" className="cursor-pointer">
+                              Profilo
+                            </Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem asChild>
+                            <Link
+                              href="/prenotazioni"
+                              className="cursor-pointer"
+                            >
+                              Le mie prenotazioni
+                            </Link>
+                          </DropdownMenuItem>
+                          <DropdownMenuItem asChild>
+                            <Link href="/preferiti" className="cursor-pointer">
+                              Preferiti
+                            </Link>
+                          </DropdownMenuItem>
+                        </>
+                      )}
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem onClick={handleLogout}>
+                      <DropdownMenuItem
+                        onClick={handleLogout}
+                        className="cursor-pointer"
+                      >
                         <LogOut className="mr-2 h-4 w-4" />
                         <span>Logout</span>
                       </DropdownMenuItem>
@@ -219,7 +208,7 @@ export function SiteHeader() {
                 variant="ghost"
                 size="icon"
                 onClick={() => setShowSearch(false)}
-                className="h-9 w-9"
+                className="h-9 w-9 cursor-pointer"
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -232,24 +221,27 @@ export function SiteHeader() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-9 w-9 lg:hidden"
+                className="h-9 w-9 lg:hidden cursor-pointer"
                 aria-label="Cerca"
               >
                 <Search className="h-5 w-5" />
               </Button>
-              <Sheet>
+              <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                 <SheetTrigger asChild>
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-9 w-9 lg:hidden"
+                    className="h-9 w-9 lg:hidden cursor-pointer"
                     aria-label="Menu"
                   >
                     <Menu className="h-5 w-5" />
                   </Button>
                 </SheetTrigger>
 
-                <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <SheetContent
+                  side="right"
+                  className="w-[300px] sm:w-[400px] [&>button]:cursor-pointer"
+                >
                   {/* Accessibilità invisibile ma presente */}
                   <VisuallyHidden>
                     <SheetTitle className="sr-only">Menu</SheetTitle>
@@ -260,12 +252,13 @@ export function SiteHeader() {
                   </VisuallyHidden>
 
                   {/* Contenuto visivo */}
-                  <nav className="flex flex-col gap-4 mt-8">
+                  <nav className="flex flex-col gap-4 mt-8 px-4">
                     {navigationLinks.map((item) => (
                       <Link
                         key={item.name}
                         href={item.href}
                         className="text-lg font-medium transition-colors hover:text-primary"
+                        onClick={handleCloseMenu}
                       >
                         {item.name}
                       </Link>
@@ -277,6 +270,7 @@ export function SiteHeader() {
                         <Link
                           href="/profilo"
                           className="flex items-center gap-2"
+                          onClick={handleCloseMenu}
                         >
                           <UserIcon className="h-5 w-5" />
                           <span>Profilo</span>
@@ -284,12 +278,14 @@ export function SiteHeader() {
                         <Link
                           href="/prenotazioni"
                           className="flex items-center gap-2"
+                          onClick={handleCloseMenu}
                         >
                           <span>Le mie prenotazioni</span>
                         </Link>
                         <Link
                           href="/preferiti"
                           className="flex items-center gap-2"
+                          onClick={handleCloseMenu}
                         >
                           <span>Preferiti</span>
                         </Link>
@@ -308,6 +304,7 @@ export function SiteHeader() {
                           <Button
                             className="w-full hover:cursor-pointer"
                             size="lg"
+                            onClick={handleCloseMenu}
                           >
                             Accedi
                           </Button>
@@ -317,6 +314,7 @@ export function SiteHeader() {
                             variant="outline"
                             className="w-full hover:cursor-pointer"
                             size="lg"
+                            onClick={handleCloseMenu}
                           >
                             Registrati
                           </Button>

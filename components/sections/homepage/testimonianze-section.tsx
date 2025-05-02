@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
+import Image from "next/image";
 
 // Dati di esempio per le testimonianze
 const testimonianze = [
@@ -40,16 +41,19 @@ export default function TestimonianzeSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {testimonianze.map((testimonianza, index) => (
             <Card key={index} className="h-full">
               <CardContent className="p-6">
                 <div className="flex items-center mb-4">
-                  <div className="mr-4">
-                    <img
+                  <div className="mr-4 size-12 relative">
+                    <Image
                       src={testimonianza.avatar || "/placeholder.svg"}
                       alt={testimonianza.nome}
-                      className="w-12 h-12 rounded-full object-cover"
+                      fill
+                      className="rounded-full object-cover"
+                      loading="lazy"
+                      sizes="48px"
                     />
                   </div>
                   <div>

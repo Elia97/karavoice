@@ -3,21 +3,20 @@ import Link from "next/link";
 
 export default function CtaSection() {
   return (
-    <section className="py-16 bg-primary text-white">
-      <div className="container px-4 text-center mx-auto">
-        <h2 className="text-3xl font-bold mb-4">
+    <section className="py-20 bg-foreground text-background">
+      <div className="container px-6 text-center mx-auto">
+        <h2 className="text-4xl font-extrabold mb-6 leading-tight">
           Pronto a Scoprire Nuovi Eventi?
         </h2>
-        <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+        <p className="text-lg mb-10 max-w-2xl mx-auto opacity-90">
           Registrati gratuitamente e inizia subito a esplorare gli eventi più
-          interessanti vicino a te
+          interessanti vicino a te.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link href={"/auth?tab=register"}>
+          <Link href="/auth?tab=register">
             <Button
-              variant="secondary"
               size="lg"
-              className="bg-white text-primary hover:bg-white/90 hover:cursor-pointer"
+              className="bg-primary text-background font-semibold hover:bg-primary/90 cursor-pointer"
             >
               Registrati Ora
             </Button>
@@ -26,7 +25,7 @@ export default function CtaSection() {
             <Button
               variant="outline"
               size="lg"
-              className="bg-transparent text-white border-white hover:bg-white/10 hover:cursor-pointer"
+              className="border border-white text-foreground hover:text-background font-semibold hover:bg-secondary cursor-pointer"
             >
               Esplora Eventi
             </Button>

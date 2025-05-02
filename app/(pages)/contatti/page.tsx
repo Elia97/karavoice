@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 export default function ContattiPage() {
   const [formData, setFormData] = useState({
@@ -33,11 +33,7 @@ export default function ContattiPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form inviato:", formData);
-    toast({
-      title: "Messaggio inviato",
-      description:
-        "Grazie per averci contattato. Ti risponderemo al più presto.",
-    });
+    toast.success("Messaggio inviato con successo!");
     setFormData({
       nome: "",
       email: "",
@@ -245,8 +241,8 @@ export default function ContattiPage() {
               </h3>
               <p className="text-muted-foreground">
                 Puoi modificare la tua prenotazione accedendo al tuo account,
-                nella sezione "Le mie prenotazioni", fino a 48 ore prima
-                dell'evento.
+                nella sezione &quot;Le mie prenotazioni&quot;, fino a 48 ore
+                prima dell&apos;evento.
               </p>
             </CardContent>
           </Card>

@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 // Dati di esempio per le categorie
 const categories = [
@@ -9,8 +12,14 @@ const categories = [
 ];
 
 export function SiteFooter() {
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
+
   return (
-    <footer className="bg-black text-gray-300 py-12">
+    <footer className="bg-foreground text-background py-12">
       <div className="container px-4 mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>

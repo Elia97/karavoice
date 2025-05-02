@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Camera, Loader2, Save } from "lucide-react";
-
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,74 +18,34 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
+import { useAuth } from "@/app/context/authContext";
 
-interface User {
-  id: string;
+interface FormData {
   nome: string;
   email: string;
   telefono: string;
   indirizzo: string;
   bio: string;
-  avatar: string;
-  dataNascita: string;
-  preferenze: {
-    categorie: string[];
-    notifiche: boolean;
-    newsletter: boolean;
-  };
+  dataNascita: Date | null;
+  notifiche: boolean;
+  newsletter: boolean;
 }
-
-// Hook per verificare l'autenticazione
-const useAuth = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Verifica se l'utente è autenticato
-    const authStatus = localStorage.getItem("isAuthenticated") === "true";
-    setIsAuthenticated(authStatus);
-
-    if (authStatus) {
-      // Dati utente di esempio (in un'app reale verrebbero dal backend)
-      setUser({
-        id: "user123",
-        nome: "Mario Rossi",
-        email: "mario.rossi@example.com",
-        telefono: "3331234567",
-        indirizzo: "Via Roma 123, 00100 Roma",
-        bio: "Appassionato di eventi culturali e concerti. Mi piace scoprire nuove esperienze e conoscere persone interessanti.",
-        avatar: "/placeholder.svg?height=100&width=100",
-        dataNascita: "1985-06-15",
-        preferenze: {
-          categorie: ["musica", "arte", "tecnologia"],
-          notifiche: true,
-          newsletter: true,
-        },
-      });
-    }
-
-    setIsLoading(false);
-  }, []);
-
-  return { isAuthenticated, user, isLoading };
-};
 
 export default function ProfiloPage() {
   const router = useRouter();
-  const { isAuthenticated, user, isLoading } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [activeTab, setActiveTab] = useState("informazioni");
   const [isSaving, setIsSaving] = useState(false);
 
   // Form state
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     nome: "",
     email: "",
     telefono: "",
     indirizzo: "",
     bio: "",
-    dataNascita: "",
+    dataNascita: null,
     notifiche: true,
     newsletter: true,
   });
@@ -94,19 +54,19 @@ export default function ProfiloPage() {
   useEffect(() => {
     if (user) {
       setFormData({
-        nome: user.nome || "",
+        nome: user.name || "",
         email: user.email || "",
-        telefono: user.telefono || "",
-        indirizzo: user.indirizzo || "",
+        telefono: user.phone || "",
+        indirizzo: user.address || "",
         bio: user.bio || "",
-        dataNascita: user.dataNascita || "",
+        dataNascita: user.date_of_birth || null,
         notifiche:
-          user.preferenze?.notifiche !== undefined
-            ? user.preferenze.notifiche
+          user.preferences?.notifications !== undefined
+            ? user.preferences.notifications
             : true,
         newsletter:
-          user.preferenze?.newsletter !== undefined
-            ? user.preferenze.newsletter
+          user.preferences?.newsletter !== undefined
+            ? user.preferences.newsletter
             : true,
       });
     }
@@ -114,10 +74,10 @@ export default function ProfiloPage() {
 
   // Reindirizza alla pagina di login se l'utente non è autenticato
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (!isAuthenticated) {
       router.push("/auth?returnUrl=/profilo");
     }
-  }, [isLoading, isAuthenticated, router]);
+  }, [isAuthenticated, router]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -137,22 +97,9 @@ export default function ProfiloPage() {
     // Simulazione di salvataggio
     setTimeout(() => {
       setIsSaving(false);
-      toast({
-        title: "Profilo aggiornato",
-        description:
-          "Le modifiche al tuo profilo sono state salvate con successo.",
-      });
+      toast.success("Modifiche salvate con successo!");
     }, 1500);
   };
-
-  // Mostra un loader mentre verifichiamo l'autenticazione
-  if (isLoading) {
-    return (
-      <div className="container max-w-4xl mx-auto py-12 px-4 flex justify-center items-center min-h-[60vh]">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
 
   // Se l'utente non è autenticato, non mostrare nulla (il reindirizzamento avverrà tramite useEffect)
   if (!isAuthenticated || !user) {
@@ -163,8 +110,12 @@ export default function ProfiloPage() {
     <div className="container max-w-4xl mx-auto py-12 px-4">
       <h1 className="text-3xl font-bold mb-8">Il mio profilo</h1>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid grid-cols-2 md:grid-cols-3 mb-8">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        defaultValue="informazioni"
+      >
+        <TabsList className="grid grid-cols-2 md:grid-cols-3 mb-8 w-full *:cursor-pointer">
           <TabsTrigger value="informazioni">Informazioni personali</TabsTrigger>
           <TabsTrigger value="preferenze">Preferenze</TabsTrigger>
           <TabsTrigger value="sicurezza">Sicurezza</TabsTrigger>
@@ -178,12 +129,16 @@ export default function ProfiloPage() {
               <CardContent className="pt-6 flex flex-col items-center">
                 <div className="relative mb-4">
                   <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-background">
-                    <img
+                    <Image
                       src={
-                        user.avatar || "/placeholder.svg?height=128&width=128"
+                        // user.avatar ||
+                        "/placeholder.svg?height=128&width=128"
                       }
-                      alt={user.nome}
+                      alt={user.name || "Avatar"}
                       className="w-full h-full object-cover"
+                      width={128}
+                      height={128}
+                      priority
                     />
                   </div>
                   <Button
@@ -195,7 +150,7 @@ export default function ProfiloPage() {
                     <span className="sr-only">Cambia immagine</span>
                   </Button>
                 </div>
-                <h2 className="text-xl font-bold">{user.nome}</h2>
+                <h2 className="text-xl font-bold">{user.name}</h2>
                 <p className="text-sm text-muted-foreground mb-4">
                   {user.email}
                 </p>
@@ -263,7 +218,11 @@ export default function ProfiloPage() {
                         id="dataNascita"
                         name="dataNascita"
                         type="date"
-                        value={formData.dataNascita}
+                        value={
+                          formData.dataNascita
+                            ? formData.dataNascita.toISOString().split("T")[0]
+                            : ""
+                        }
                         onChange={handleChange}
                       />
                     </div>
@@ -289,8 +248,12 @@ export default function ProfiloPage() {
                     />
                   </div>
                 </CardContent>
-                <CardFooter>
-                  <Button type="submit" disabled={isSaving}>
+                <CardFooter className="pt-6">
+                  <Button
+                    type="submit"
+                    disabled={isSaving}
+                    className="cursor-pointer"
+                  >
                     {isSaving ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -324,25 +287,17 @@ export default function ProfiloPage() {
                   Categorie di interesse
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                  {[
-                    "Musica",
-                    "Arte",
-                    "Tecnologia",
-                    "Gastronomia",
-                    "Sport",
-                    "Cinema",
-                    "Teatro",
-                    "Formazione",
-                  ].map((categoria) => (
+                  {["Karaoke", "Dj Set", "Live Music"].map((categoria) => (
                     <div
                       key={categoria}
                       className="flex items-center space-x-2"
                     >
                       <input
                         type="checkbox"
+                        title="categorie"
                         id={`cat-${categoria.toLowerCase()}`}
                         className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-                        defaultChecked={user.preferenze?.categorie?.includes(
+                        defaultChecked={user.preferences?.categories?.includes(
                           categoria.toLowerCase()
                         )}
                       />
@@ -363,6 +318,7 @@ export default function ProfiloPage() {
                     <input
                       type="checkbox"
                       id="notifiche"
+                      title="notifiche"
                       name="notifiche"
                       checked={formData.notifiche}
                       onChange={handleChange}
@@ -375,6 +331,7 @@ export default function ProfiloPage() {
                   <div className="flex items-center space-x-2">
                     <input
                       type="checkbox"
+                      title="newsletter"
                       id="newsletter"
                       name="newsletter"
                       checked={formData.newsletter}

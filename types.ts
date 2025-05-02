@@ -32,8 +32,10 @@ export interface Location {
 export interface Category {
   id: UUID;
   name: string;
+  description: string;
   slug: string;
   icon: string;
+  image: string;
   eventCount: number;
   createdAt: string;
   updatedAt: string;
@@ -46,6 +48,14 @@ export interface User {
   phone: string;
   address: string;
   city: string;
+  bio: string;
+  avatar: string;
+  date_of_birth: Date | null;
+  preferences: {
+    categories: string[];
+    notifications: boolean;
+    newsletter: boolean;
+  };
   password: string;
   role: string;
   last_login_at: Date;

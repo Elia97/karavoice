@@ -5,10 +5,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "127.0.0.1",
-        port: "3001", // Specifica la porta del backend
-        pathname: "/uploads/**", // Percorso delle immagini
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**", // permette tutti i path
       },
     ],
   },

@@ -1,135 +1,36 @@
-import { Search } from "lucide-react";
+import { Headphones, Mic, Music, Search } from "lucide-react";
 import Link from "next/link";
-
+import { Category } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-
-// Dati di esempio per le categorie
-const categorie = [
-  {
-    nome: "Musica",
-    icona: "🎵",
-    count: 24,
-    descrizione:
-      "Concerti, festival, spettacoli dal vivo e molto altro. Scopri gli eventi musicali più interessanti in tutta Italia.",
-    immagine: "/placeholder.svg?height=300&width=600",
-    sottocategorie: [
-      "Rock",
-      "Jazz",
-      "Classica",
-      "Pop",
-      "Elettronica",
-      "Hip Hop",
-    ],
-  },
-  {
-    nome: "Arte",
-    icona: "🎨",
-    count: 18,
-    descrizione:
-      "Mostre, esposizioni, vernissage e laboratori artistici. Esplora il mondo dell'arte in tutte le sue forme.",
-    immagine: "/placeholder.svg?height=300&width=600",
-    sottocategorie: [
-      "Pittura",
-      "Scultura",
-      "Fotografia",
-      "Arte Contemporanea",
-      "Installazioni",
-    ],
-  },
-  {
-    nome: "Tecnologia",
-    icona: "💻",
-    count: 15,
-    descrizione:
-      "Conferenze, workshop, hackathon e incontri dedicati all'innovazione e alle nuove tecnologie.",
-    immagine: "/placeholder.svg?height=300&width=600",
-    sottocategorie: [
-      "AI",
-      "Blockchain",
-      "Sviluppo Web",
-      "Startup",
-      "IoT",
-      "Gaming",
-    ],
-  },
-  {
-    nome: "Gastronomia",
-    icona: "🍽️",
-    count: 22,
-    descrizione:
-      "Sagre, degustazioni, festival gastronomici e corsi di cucina. Scopri i sapori e le tradizioni culinarie italiane.",
-    immagine: "/placeholder.svg?height=300&width=600",
-    sottocategorie: [
-      "Vino",
-      "Street Food",
-      "Cucina Regionale",
-      "Pasticceria",
-      "Corsi di Cucina",
-    ],
-  },
-  {
-    nome: "Sport",
-    icona: "🏃",
-    count: 20,
-    descrizione:
-      "Competizioni, tornei, maratone e attività sportive per tutti i livelli. Partecipa o assisti agli eventi sportivi.",
-    immagine: "/placeholder.svg?height=300&width=600",
-    sottocategorie: [
-      "Calcio",
-      "Running",
-      "Ciclismo",
-      "Yoga",
-      "Basket",
-      "Tennis",
-    ],
-  },
-  {
-    nome: "Cinema",
-    icona: "🎬",
-    count: 12,
-    descrizione:
-      "Festival cinematografici, proiezioni speciali, anteprime e incontri con registi e attori.",
-    immagine: "/placeholder.svg?height=300&width=600",
-    sottocategorie: [
-      "Film Festival",
-      "Documentari",
-      "Cinema Indipendente",
-      "Anteprime",
-      "Retrospettive",
-    ],
-  },
-  {
-    nome: "Teatro",
-    icona: "🎭",
-    count: 16,
-    descrizione:
-      "Spettacoli teatrali, commedie, drammi, musical e performance dal vivo sui palcoscenici di tutta Italia.",
-    immagine: "/placeholder.svg?height=300&width=600",
-    sottocategorie: ["Commedia", "Dramma", "Musical", "Opera", "Danza"],
-  },
-  {
-    nome: "Formazione",
-    icona: "📚",
-    count: 14,
-    descrizione:
-      "Corsi, seminari, workshop e conferenze per ampliare le tue conoscenze e sviluppare nuove competenze.",
-    immagine: "/placeholder.svg?height=300&width=600",
-    sottocategorie: [
-      "Lingue",
-      "Business",
-      "Marketing",
-      "Sviluppo Personale",
-      "Creatività",
-    ],
-  },
-];
+import Image from "next/image";
 
 export default async function CategoriePage() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/categories`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    return (
+      <div className="container mx-auto py-6">
+        <h1 className="text-3xl font-bold">
+          Errore durante il recupero delle categorie
+        </h1>
+      </div>
+    );
+  }
+
+  const categories: Category[] = await res.json();
+
   const wait = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
   await wait(3000);
+
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="max-w-3xl mx-auto text-center mb-12">
@@ -149,50 +50,46 @@ export default async function CategoriePage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {categorie.map((categoria) => (
+        {categories.map((category) => (
           <Card
-            key={categoria.nome}
-            className="overflow-hidden hover:shadow-md transition-shadow"
+            key={category.name}
+            className="overflow-hidden hover:shadow-md transition-shadow py-0"
           >
             <div className="relative h-48">
-              <img
-                src={categoria.immagine || "/placeholder.svg"}
-                alt={categoria.nome}
-                className="w-full h-full object-cover"
+              <Image
+                src={category.image || "/placeholder.svg"}
+                alt={category.name}
+                className="object-cover"
+                fill
+                priority
+                sizes="(min-width: 768px) 50vw, 100vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
                 <div className="text-white">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-2xl">{categoria.icona}</span>
-                    <h2 className="text-2xl font-bold">{categoria.nome}</h2>
+                    <span className="text-2xl">
+                      {category.icon === "mic" ? (
+                        <Mic />
+                      ) : category.icon === "headphones" ? (
+                        <Headphones />
+                      ) : (
+                        <Music />
+                      )}
+                    </span>
+                    <h2 className="text-2xl font-bold">{category.name}</h2>
                   </div>
                   <p className="text-white/80 text-sm">
-                    {categoria.count} eventi
+                    {category.eventCount} eventi
                   </p>
                 </div>
               </div>
             </div>
             <CardContent className="p-6">
               <p className="text-muted-foreground mb-4">
-                {categoria.descrizione}
+                {category.description}
               </p>
-              <div className="mb-4">
-                <h3 className="text-sm font-medium mb-2">Sottocategorie:</h3>
-                <div className="flex flex-wrap gap-2">
-                  {categoria.sottocategorie.map((sottocategoria) => (
-                    <Link
-                      key={sottocategoria}
-                      href={`/eventi?categoria=${categoria.nome.toLowerCase()}&sottocategoria=${sottocategoria.toLowerCase()}`}
-                    >
-                      <span className="inline-block px-3 py-1 bg-muted rounded-full text-sm hover:bg-muted/80 transition-colors">
-                        {sottocategoria}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              <Link href={`/eventi?categoria=${categoria.nome.toLowerCase()}`}>
-                <Button className="w-full">Esplora {categoria.nome}</Button>
+              <Link href={`/eventi?categoria=${category.name.toLowerCase()}`}>
+                <Button className="w-full">Esplora {category.name}</Button>
               </Link>
             </CardContent>
           </Card>

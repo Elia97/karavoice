@@ -1,10 +1,13 @@
-import { ArrowLeft, CalendarDays, MapPin, Share2, Users } from "lucide-react";
+import { ArrowLeft, CalendarDays, MapPin, Share2 } from "lucide-react";
 import Link from "next/link";
 import { Event } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { UUID } from "crypto";
+// import { PrenotaEventoDialog } from "@/components/prenota-evento-dialog";
+import Image from "next/image";
 import { PrenotaEventoDialog } from "@/components/prenota-evento-dialog";
+import GoogleMaps from "@/components/google-maps";
 
 export default async function EventoDettaglio({
   params,
@@ -46,9 +49,11 @@ export default async function EventoDettaglio({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
           <div className="relative rounded-xl overflow-hidden">
-            <img
+            <Image
               src={event.image || "/placeholder.svg"}
               alt={event.name}
+              width={800}
+              height={400}
               className="w-full h-[300px] md:h-[400px] object-cover"
             />
             <div className="absolute top-4 right-4">
@@ -62,7 +67,7 @@ export default async function EventoDettaglio({
           <div>
             <h1 className="text-3xl font-bold mb-2">{event.name}</h1>
             <div className="flex flex-wrap gap-2 mb-4">
-              <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">
+              <span className="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-sm">
                 {event.category.name}
               </span>
             </div>
@@ -106,20 +111,16 @@ export default async function EventoDettaglio({
                   </div>
                 </div>
               </div>
-
-              <Button className="w-full mt-4">Prenota Ora</Button>
+              <PrenotaEventoDialog evento={event} />
             </CardContent>
           </Card>
 
           <Card>
-            <CardContent className="p-6">
-              <iframe
-                title="Mappa evento"
-                className="w-full h-[200px] rounded-md border"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=11.3415,44.4912,11.3515,44.4962&layer=mapnik"
-                style={{ border: 0 }}
-                allowFullScreen
-              ></iframe>
+            <CardContent className="px-6">
+              <GoogleMaps
+                lat={Number(event.location.latitude)}
+                lng={Number(event.location.longitude)}
+              />
             </CardContent>
           </Card>
         </div>

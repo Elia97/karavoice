@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CalendarDays, Heart, Loader2, MapPin, Search, X } from "lucide-react";
 import Link from "next/link";
-
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -21,7 +21,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 // Hook per verificare l'autenticazione
 const useAuth = () => {
@@ -159,10 +159,7 @@ export default function PreferitiPage() {
     setShowConfirmDialog(false);
     setEventoToRemove(null);
 
-    toast({
-      title: "Evento rimosso dai preferiti",
-      description: "L'evento è stato rimosso dalla tua lista dei preferiti.",
-    });
+    toast.success(`"${eventoToRemove.titolo}" rimosso dai preferiti`);
   };
 
   const renderEventCards = () => {
@@ -174,9 +171,11 @@ export default function PreferitiPage() {
             className="overflow-hidden h-full flex flex-col"
           >
             <div className="relative">
-              <img
+              <Image
                 src={evento.immagine || "/placeholder.svg"}
                 alt={evento.titolo}
+                width={400}
+                height={200}
                 className="w-full h-48 object-cover"
               />
               <Button
@@ -270,7 +269,7 @@ export default function PreferitiPage() {
             {searchQuery ? (
               <>
                 <p className="text-lg mb-2">
-                  Nessun evento trovato per "{searchQuery}"
+                  Nessun evento trovato per &quot;{searchQuery}&quot;
                 </p>
                 <p className="text-muted-foreground">
                   Prova a cercare con un altro termine
@@ -300,8 +299,8 @@ export default function PreferitiPage() {
             <DialogHeader>
               <DialogTitle>Conferma rimozione</DialogTitle>
               <DialogDescription>
-                Sei sicuro di voler rimuovere "{eventoToRemove?.titolo}" dai
-                tuoi preferiti?
+                Sei sicuro di voler rimuovere &quot;{eventoToRemove?.titolo}
+                &quot; dai tuoi preferiti?
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="flex space-x-2 justify-end">

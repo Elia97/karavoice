@@ -13,12 +13,12 @@ import {
   X,
 } from "lucide-react";
 import Link from "next/link";
-
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 // Hook per verificare l'autenticazione
 const useAuth = () => {
@@ -236,10 +236,7 @@ export default function PrenotazioniPage() {
     // Simulazione di chiamata API per cancellare la prenotazione
     setPrenotazioni((prev) => prev.filter((pren) => pren.id !== id));
 
-    toast({
-      title: "Prenotazione annullata",
-      description: "La tua prenotazione è stata annullata con successo.",
-    });
+    toast.success("Prenotazione annullata con successo!");
   };
 
   // Mostra un loader mentre verifichiamo l'autenticazione
@@ -296,7 +293,7 @@ export default function PrenotazioniPage() {
               {searchQuery ? (
                 <>
                   <p className="text-lg mb-2">
-                    Nessuna prenotazione trovata per "{searchQuery}"
+                    Nessuna prenotazione trovata per &quot;{searchQuery}&quot;
                   </p>
                   <p className="text-muted-foreground">
                     Prova a cercare con un altro termine o codice
@@ -321,9 +318,12 @@ export default function PrenotazioniPage() {
                 <Card key={prenotazione.id} className="overflow-hidden">
                   <div className="md:flex">
                     <div className="md:w-1/3">
-                      <img
+                      import Image from &quot;next/image&quot;;
+                      <Image
                         src={prenotazione.immagine || "/placeholder.svg"}
                         alt={prenotazione.titolo}
+                        width={400}
+                        height={200}
                         className="w-full h-full object-cover aspect-video md:aspect-square"
                       />
                     </div>
@@ -409,7 +409,7 @@ export default function PrenotazioniPage() {
               {searchQuery ? (
                 <>
                   <p className="text-lg mb-2">
-                    Nessuna prenotazione trovata per "{searchQuery}"
+                    Nessuna prenotazione trovata per &quot;{searchQuery}&quot;
                   </p>
                   <p className="text-muted-foreground">
                     Prova a cercare con un altro termine o codice
@@ -431,9 +431,11 @@ export default function PrenotazioniPage() {
                 <Card key={prenotazione.id} className="overflow-hidden">
                   <div className="md:flex">
                     <div className="md:w-1/3">
-                      <img
+                      <Image
                         src={prenotazione.immagine || "/placeholder.svg"}
                         alt={prenotazione.titolo}
+                        width={400}
+                        height={200}
                         className="w-full h-full object-cover aspect-video md:aspect-square"
                       />
                     </div>

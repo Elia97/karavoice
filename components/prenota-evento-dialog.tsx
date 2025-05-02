@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,80 +23,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
+import { Event } from "@/types";
+import { useAuth } from "@/app/context/authContext";
 
-interface Evento {
-  id: string;
-  titolo: string;
-  descrizione: string;
-  categoria: string;
-  immagine: string;
-  data: string;
-  oraInizio: string;
-  oraFine: string;
-  luogo: string;
-}
-
-interface User {
-  id: string;
-  nome: string;
-  email: string;
-  telefono: string;
-}
-
-// Modificare l'hook useAuth per evitare aggiornamenti infinitas
-const useAuth = () => {
-  // Verifica se siamo nel browser
-  const isClient = typeof window !== "undefined";
-
-  // Usiamo useState per mantenere lo stato di autenticazione
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
-
-  // Usiamo useEffect per verificare l'autenticazione solo una volta al montaggio del componente
-  useEffect(() => {
-    if (isClient) {
-      const authStatus = localStorage.getItem("isAuthenticated") === "true";
-      setIsAuthenticated(authStatus);
-
-      if (authStatus) {
-        setUser({
-          id: "user123",
-          nome: "Mario Rossi",
-          email: "mario.rossi@example.com",
-          telefono: "3331234567",
-        });
-      }
-    }
-  }, [isClient]); // Si esegue solo quando cambia isClient (praticamente solo al montaggio)
-
-  // Funzione per simulare il login
-  const login = useCallback(() => {
-    if (isClient) {
-      localStorage.setItem("isAuthenticated", "true");
-      setIsAuthenticated(true);
-      setUser({
-        id: "user123",
-        nome: "Mario Rossi",
-        email: "mario.rossi@example.com",
-        telefono: "3331234567",
-      });
-    }
-  }, [isClient]);
-
-  // Funzione per simulare il logout
-  const logout = useCallback(() => {
-    if (isClient) {
-      localStorage.setItem("isAuthenticated", "false");
-      setIsAuthenticated(false);
-      setUser(null);
-    }
-  }, [isClient]);
-
-  return { isAuthenticated, user, login, logout };
-};
-
-export function PrenotaEventoDialog({ evento }: { evento: Evento }) {
+export function PrenotaEventoDialog({ evento }: { evento: Event }) {
   const [isOpen, setIsOpen] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const { isAuthenticated, user } = useAuth();
@@ -117,9 +48,9 @@ export function PrenotaEventoDialog({ evento }: { evento: Evento }) {
     if (isAuthenticated && user) {
       setFormData((prevData) => ({
         ...prevData,
-        nome: user.nome,
+        nome: user.name,
         email: user.email,
-        telefono: user.telefono || prevData.telefono,
+        telefono: user.phone || prevData.telefono,
       }));
     }
   }, [isAuthenticated, user]);
@@ -147,10 +78,7 @@ export function PrenotaEventoDialog({ evento }: { evento: Evento }) {
     setTimeout(() => {
       setIsSubmitting(false);
       setIsOpen(false);
-      toast({
-        title: "Prenotazione confermata",
-        description: `Grazie per aver prenotato "${evento.titolo}". Riceverai un'email di conferma a breve.`,
-      });
+      toast.success("Prenotazione effettuata con successo!");
       setFormData((prev) => ({
         ...prev,
         numPartecipanti: "1",
@@ -188,8 +116,8 @@ export function PrenotaEventoDialog({ evento }: { evento: Evento }) {
             <DialogHeader>
               <DialogTitle>Accesso richiesto</DialogTitle>
               <DialogDescription>
-                Per prenotare "{evento.titolo}" è necessario accedere al tuo
-                account o registrarti.
+                Per prenotare &quot;{evento.name}&quot; è necessario accedere al
+                tuo account o registrarti.
               </DialogDescription>
             </DialogHeader>
             <div className="py-6 flex flex-col items-center">
@@ -210,8 +138,13 @@ export function PrenotaEventoDialog({ evento }: { evento: Evento }) {
             <DialogHeader>
               <DialogTitle>Prenota Evento</DialogTitle>
               <DialogDescription>
-                Compila il form per prenotare "{evento.titolo}" in data{" "}
-                {evento.data}.
+                Compila il form per prenotare &quot;{evento.name}&quot; in data{" "}
+                {new Date(evento.date).toLocaleDateString("it-IT", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+                .
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit}>

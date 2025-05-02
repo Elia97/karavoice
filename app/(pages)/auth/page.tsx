@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Eye, EyeOff, Facebook, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,11 +18,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 export default function AuthPage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const [activeTab, setActiveTab] = useState("login");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -68,30 +67,53 @@ export default function AuthPage() {
     }));
   };
 
-  const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLoginSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: loginForm.email,
+          password: loginForm.password,
+        }),
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        toast.error("Errore durante il login", {
+          description:
+            errorData.error || "Controlla le tue credenziali e riprova.",
+          duration: 3000,
+        });
+      }
+
+      if (res.ok) {
+        const data = await res.json();
+        console.log("Login successful:", data);
+        toast.success("Accesso completato", {
+          description: "Benvenuto di nuovo!",
+          duration: 1500,
+        });
+      }
+
       setIsLoading(false);
 
-      // Simulazione di login riuscito
-      if (typeof window !== "undefined") {
-        localStorage.setItem("isAuthenticated", "true");
-
-        // Mostra il toast
-        toast({
-          title: "Accesso effettuato",
-          description: "Benvenuto su EventiApp!",
-        });
-
-        // Ritardo prima del reindirizzamento per permettere al toast di essere visualizzato
-        setTimeout(() => {
-          window.location.href = returnUrl;
-        }, 1000);
-      }
-    }, 1500);
+      setTimeout(() => {
+        window.location.href = returnUrl;
+      }, 1500);
+    } catch (error) {
+      console.error("Errore durante il login: ", error);
+      toast.error("Errore durante il login", {
+        description: "Controlla le tue credenziali e riprova.",
+        duration: 3000,
+      });
+    }
   };
 
   const handleRegisterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -99,10 +121,9 @@ export default function AuthPage() {
 
     // Validate passwords match
     if (registerForm.password !== registerForm.confirmPassword) {
-      toast({
-        title: "Errore",
-        description: "Le password non corrispondono",
-        variant: "destructive",
+      toast.error("Le password non corrispondono", {
+        description: "Controlla le password e riprova.",
+        duration: 3000,
       });
       return;
     }
@@ -118,15 +139,15 @@ export default function AuthPage() {
         localStorage.setItem("isAuthenticated", "true");
 
         // Mostra il toast
-        toast({
-          title: "Registrazione completata",
-          description: "Il tuo account è stato creato con successo!",
+        toast.success("Registrazione completata", {
+          description: "Benvenuto a bordo!",
+          duration: 3000,
         });
 
         // Ritardo prima del reindirizzamento per permettere al toast di essere visualizzato
         setTimeout(() => {
           window.location.href = returnUrl;
-        }, 1000);
+        }, 3000);
       }
     }, 1500);
   };
@@ -143,15 +164,15 @@ export default function AuthPage() {
         localStorage.setItem("isAuthenticated", "true");
 
         // Mostra il toast
-        toast({
-          title: `Accesso con ${provider}`,
-          description: "Autenticazione completata con successo!",
+        toast.success(`Accesso con ${provider} completato`, {
+          description: "Benvenuto di nuovo!",
+          duration: 3000,
         });
 
         // Ritardo prima del reindirizzamento per permettere al toast di essere visualizzato
         setTimeout(() => {
           window.location.href = returnUrl;
-        }, 1000);
+        }, 3000);
       }
     }, 1000);
   };
